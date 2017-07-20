@@ -126,7 +126,7 @@ MetaTypeName|string|元数据类型名，值为"column"
 ## 常见问题
 
 [二进制可执行文件包]: https://github.com/xianrendzw/CodeBuilder/releases/download/v1.1.16.0602_Beta/CodeBuilder_1.1.16.0602.zip 
-[English]: https://github.com/xianrendzw/CodeBuilder/blob/master/README.MD 
+[English]: https://github.com/FreshManIT/CodeBuilder/blob/master/README.MD  
 [VS2010]: https://www.visualstudio.com/  
 [sharpdevelop]: http://www.icsharpcode.net/opensource/sd/
 [mono.net]: http://www.mono-project.com/download/  
