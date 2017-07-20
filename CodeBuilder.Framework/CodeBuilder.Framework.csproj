@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1FDA5B2E-BD7D-4BB1-9579-C25130156A43}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CodeBuilder.Framework</RootNamespace>
+    <AssemblyName>CodeBuilder.Framework</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MySql.Data, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.6.9.8\lib\net40\MySql.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NVelocity, Version=1.1.1.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.NVelocity.1.1.1\lib\net40\NVelocity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Oracle.DataAccess, Version=4.112.3.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=AMD64">
+      <HintPath>..\packages\odp.net.x64.112.3.20\lib\net40\Oracle.DataAccess.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Configuration\ConfigManager.cs" />
+    <Compile Include="Configuration\DataSource\DataSourceElement.cs" />
+    <Compile Include="Configuration\DataSource\DataSourceElementCollection.cs" />
+    <Compile Include="Configuration\DataSource\DataSourceSection.cs" />
+    <Compile Include="Configuration\Generation\GenerationSettings.cs" />
+    <Compile Include="Configuration\Options\OptionElement.cs" />
+    <Compile Include="Configuration\Options\OptionElementCollection.cs" />
+    <Compile Include="Configuration\Options\OptionSection.cs" />
+    <Compile Include="Configuration\Settings\AppSettingsElement.cs" />
+    <Compile Include="Configuration\Settings\AppSettingsElementCollection.cs" />
+    <Compile Include="Configuration\Settings\PdmDatabaseElement.cs" />
+    <Compile Include="Configuration\Settings\PdmDatabaseElementCollection.cs" />
+    <Compile Include="Configuration\Settings\SettingsSection.cs" />
+    <Compile Include="Configuration\Settings\TemplateEngineElement.cs" />
+    <Compile Include="Configuration\Settings\TemplateEngineElementCollection.cs" />
+    <Compile Include="Configuration\Settings\DatabaseElementCollection.cs" />
+    <Compile Include="Configuration\Settings\DatabaseElement.cs" />
+    <Compile Include="Configuration\Settings\ExporterElement.cs" />
+    <Compile Include="Configuration\Settings\ExporterElementCollection.cs" />
+    <Compile Include="Configuration\Settings\LanguageElement.cs" />
+    <Compile Include="Configuration\Settings\LanguageElementCollection.cs" />
+    <Compile Include="Configuration\Template\TemplateElement.cs" />
+    <Compile Include="Configuration\Template\TemplateElementCollection.cs" />
+    <Compile Include="Configuration\Template\TemplateSection.cs" />
+    <Compile Include="Configuration\TypeMapping\TypeElement.cs" />
+    <Compile Include="Configuration\TypeMapping\TypeElementCollection.cs" />
+    <Compile Include="Configuration\TypeMapping\TypeMappingElement.cs" />
+    <Compile Include="Configuration\TypeMapping\TypeMappingElementCollection.cs" />
+    <Compile Include="Configuration\TypeMapping\TypeMappingSection.cs" />
+    <Compile Include="Exceptions\NotSupportDatabaseException.cs" />
+    <Compile Include="Exceptions\NotFoundPdmDBMSException.cs" />
+    <Compile Include="Exporter\BaseExporter.cs" />
+    <Compile Include="Exporter\IExporter.cs" />
+    <Compile Include="Exporter\MySQL\MySql5Exporter.cs" />
+    <Compile Include="Exporter\Oracle\Oracle8iExporter.cs" />
+    <Compile Include="Exporter\Oracle\OracleHelper.cs" />
+    <Compile Include="Exporter\PowerDesigner\PowerDesigner12Exporter.cs" />
+    <Compile Include="Exporter\SQLServer\SqlHelper.cs" />
+    <Compile Include="Exporter\SQLServer\SqlServer2000Exporter.cs" />
+    <Compile Include="Exporter\SQLServer\SqlServer2005Exporter.cs" />
+    <Compile Include="Exporter\SQLServer\SqlServer2008Exporter.cs" />
+    <Compile Include="PhysicalDataModel\BaseTable.cs" />
+    <Compile Include="PhysicalDataModel\Column.cs" />
+    <Compile Include="PhysicalDataModel\Columns.cs" />
+    <Compile Include="PhysicalDataModel\IMetaData.cs" />
+    <Compile Include="PhysicalDataModel\Model.cs" />
+    <Compile Include="PhysicalDataModel\Table.cs" />
+    <Compile Include="PhysicalDataModel\Tables.cs" />
+    <Compile Include="PhysicalDataModel\View.cs" />
+    <Compile Include="PhysicalDataModel\Views.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="TemplateEngine\Adapters\NVelocityEngineAdapter.cs" />
+    <Compile Include="TemplateEngine\ITemplateEngine.cs" />
+    <Compile Include="TemplateEngine\TemplateData.cs" />
+    <Compile Include="TemplateEngine\TemplateDataBuilder.cs" />
+    <Compile Include="TypeMapping\DefaultTypeMapper.cs" />
+    <Compile Include="TypeMapping\ITypeMapper.cs" />
+    <Compile Include="TypeMapping\LanguageType.cs" />
+    <Compile Include="TypeMapping\TypeMapperFactory.cs" />
+    <Compile Include="Util\AssemblyHelper.cs" />
+    <Compile Include="Util\ConvertHelper.cs" />
+    <Compile Include="Util\Logging\InternalTrace.cs" />
+    <Compile Include="Util\Logging\InternalTraceWriter.cs" />
+    <Compile Include="Util\Logging\Logger.cs" />
+    <Compile Include="Util\PathHelper.cs" />
+    <Compile Include="Util\SerializeHelper.cs" />
+    <Compile Include="Util\StringExtension.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resource.zh-CN.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.zh-CN.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
