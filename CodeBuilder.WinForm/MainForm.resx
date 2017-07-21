@@ -185,7 +185,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAAB8
-        CQAAAk1TRnQBSQFMAgEBAwEAATABAgEwAQIBEgEAARIBAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        CQAAAk1TRnQBSQFMAgEBAwEAATgBAgE4AQIBEgEAARIBAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABSAMAARIDAAEBAQABCAUAARABBRgAAYACAAGAAwACgAEAAYADAAGAAQABgAEAAoACAAPAAQABwAHc
         AcABAAHwAcoBpgEAATMFAAEzAQABMwEAATMBAAIzAgADFgEAAxwBAAMiAQADKQEAA1UBAANNAQADQgEA
         AzkBAAGAAXwB/wEAAlAB/wEAAZMBAAHWAQAB/wHsAcwBAAHGAdYB7wEAAdYC5wEAAZABqQGtAgAB/wEz
@@ -415,7 +415,7 @@
     <value>NoControl</value>
   </data>
   <data name="completedLbl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>658, 69</value>
+    <value>657, 69</value>
   </data>
   <data name="completedLbl.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 0, 4, 0</value>
@@ -523,7 +523,7 @@
     <value>4, 0, 4, 0</value>
   </data>
   <data name="currentGenFileNameLbl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>564, 42</value>
+    <value>563, 42</value>
   </data>
   <data name="currentGenFileNameLbl.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -589,7 +589,7 @@
     <value>4, 4, 4, 4</value>
   </data>
   <data name="genProgressBar.Size" type="System.Drawing.Size, System.Drawing">
-    <value>725, 26</value>
+    <value>724, 26</value>
   </data>
   <data name="genProgressBar.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -616,7 +616,7 @@
     <value>4, 4, 4, 4</value>
   </data>
   <data name="resultGbx.Size" type="System.Drawing.Size, System.Drawing">
-    <value>750, 227</value>
+    <value>749, 227</value>
   </data>
   <data name="resultGbx.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -691,7 +691,7 @@
     <value>4, 4, 4, 4</value>
   </data>
   <data name="templateListBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>232, 109</value>
+    <value>231, 109</value>
   </data>
   <data name="templateListBox.TabIndex" type="System.Int32, mscorlib">
     <value>19</value>
@@ -976,7 +976,7 @@
     <value>4, 4, 4, 4</value>
   </data>
   <data name="languageCombx.Size" type="System.Drawing.Size, System.Drawing">
-    <value>232, 23</value>
+    <value>231, 23</value>
   </data>
   <data name="languageCombx.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -1078,7 +1078,7 @@
     <value>100</value>
   </data>
   <data name="versionTxtBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>232, 25</value>
+    <value>231, 25</value>
   </data>
   <data name="versionTxtBox.TabIndex" type="System.Int32, mscorlib">
     <value>15</value>
@@ -1213,7 +1213,7 @@
     <value>50</value>
   </data>
   <data name="tablePrefixTxtBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>232, 25</value>
+    <value>231, 25</value>
   </data>
   <data name="tablePrefixTxtBox.TabIndex" type="System.Int32, mscorlib">
     <value>11</value>
@@ -1345,7 +1345,7 @@
     <value>NoControl</value>
   </data>
   <data name="saveSettingsBtn.Location" type="System.Drawing.Point, System.Drawing">
-    <value>504, 270</value>
+    <value>503, 270</value>
   </data>
   <data name="saveSettingsBtn.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
@@ -1381,7 +1381,7 @@
     <value>NoControl</value>
   </data>
   <data name="generateBtn.Location" type="System.Drawing.Point, System.Drawing">
-    <value>638, 270</value>
+    <value>637, 270</value>
   </data>
   <data name="generateBtn.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
@@ -1417,7 +1417,7 @@
     <value>4, 4, 4, 4</value>
   </data>
   <data name="genItemsGbx.Size" type="System.Drawing.Size, System.Drawing">
-    <value>750, 309</value>
+    <value>749, 309</value>
   </data>
   <data name="genItemsGbx.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>

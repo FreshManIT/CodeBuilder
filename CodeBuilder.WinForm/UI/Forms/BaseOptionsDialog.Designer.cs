@@ -1,4 +1,4 @@
-﻿namespace CodeBuilder.WinForm.UI
+﻿namespace CodeBuilder.WinForm.UI.Forms
 {
     partial class BaseOptionsDialog
     {

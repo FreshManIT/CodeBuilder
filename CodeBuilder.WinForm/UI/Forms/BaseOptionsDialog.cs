@@ -1,25 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
+using CodeBuilder.Util;
 
-namespace CodeBuilder.WinForm.UI
+namespace CodeBuilder.WinForm.UI.Forms
 {
-    using Configuration;
-    using Util;
-
     public partial class BaseOptionsDialog : Form
     {
-        private static Logger logger = InternalTrace.GetLogger(typeof(BaseOptionsDialog));
+        private static readonly Logger Logger = InternalTrace.GetLogger(typeof(BaseOptionsDialog));
 
         public BaseOptionsDialog()
         {
             InitializeComponent();
-            this.optionsPages = new OptionsPageList(6);
+            optionsPages = new OptionsPageList(6);
         }
 
         #region Properties
@@ -44,7 +38,7 @@ namespace CodeBuilder.WinForm.UI
                 }
                 catch (Exception ex)
                 {
-                    logger.Error(ex.Message, ex);
+                    Logger.Error(ex.Message, ex);
                     MessageBoxHelper.DisplayFailure(ex.Message);
                 }
             }
@@ -58,7 +52,7 @@ namespace CodeBuilder.WinForm.UI
         {
         }
 
-        private void okButton_Click(object sender, System.EventArgs e)
+        private void okButton_Click(object sender, EventArgs e)
         {
             ApplySettings();
             DialogResult = DialogResult.OK;
@@ -71,7 +65,7 @@ namespace CodeBuilder.WinForm.UI
         public class OptionsPageList : List<BaseOptionsPage>
         {
             public OptionsPageList()
-                : base() { }
+            { }
 
             public OptionsPageList(int capacity)
                 : base(capacity)

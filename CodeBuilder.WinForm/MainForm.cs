@@ -37,6 +37,12 @@ namespace CodeBuilder.WinForm
         #region [2 Menu Handlers]
 
         #region File
+
+        /// <summary>
+        /// use youself setting file xml
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void fileOpenMenuItem_Click(object sender, EventArgs e)
         {
             openFileDialog.Title = Resources.OpenGenerationSettingsFile;
@@ -97,7 +103,7 @@ namespace CodeBuilder.WinForm
                 return;
             }
 
-            statusBarReady.Text = string.Format("{0} {1}", cmdText, xmlFileName);
+            statusBarReady.Text = $"{cmdText} {xmlFileName}";
             _currentGenerationSettingsFile = xmlFileName;
         }
 
@@ -189,7 +195,11 @@ namespace CodeBuilder.WinForm
         #endregion
 
         #region Tools
-
+        /// <summary>
+        /// Option page.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void toolsOptionsMenuItem_Click(object sender, EventArgs e)
         {
             OptionsDialog.Display(this);
@@ -516,6 +526,10 @@ namespace CodeBuilder.WinForm
             }
         }
 
+        /// <summary>
+        /// Get setting
+        /// </summary>
+        /// <returns></returns>
         private GenerationSettings GetGenerationSettings()
         {
             GenerationSettings settings = new GenerationSettings(languageCombx.Text,
@@ -526,7 +540,11 @@ namespace CodeBuilder.WinForm
             return settings;
         }
 
-        public bool CheckParameters()
+        /// <summary>
+        /// Check paramters.
+        /// </summary>
+        /// <returns></returns>
+        private bool CheckParameters()
         {
             if (!GenerationHelper.IsValidPackageName(packageTxtBox.Text))
             {

@@ -1,24 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using CodeBuilder.Framework.Configuration;
+using CodeBuilder.WinForm.Properties;
 
+// ReSharper disable once CheckNamespace
 namespace CodeBuilder.WinForm.UI.OptionsPages
 {
-    using Configuration;
-    using Properties;
-    using Util;
-
     public partial class CodeGeneralOptionsPage : BaseOptionsPage
     {
-        private static Logger logger = InternalTrace.GetLogger(typeof(CodeGeneralOptionsPage));
-
         public CodeGeneralOptionsPage()
         {
             InitializeComponent();
@@ -32,17 +22,17 @@ namespace CodeBuilder.WinForm.UI.OptionsPages
 
         public override void LoadSettings()
         {
-            this.isLoaded = true;
-            this.ouputPathTxtbox.Text = ConfigManager.GenerationCodeOuputPath;
-            this.templatePathTxtbox.Text = ConfigManager.TemplatePath;
+            isLoaded = true;
+            ouputPathTxtbox.Text = ConfigManager.GenerationCodeOuputPath;
+            templatePathTxtbox.Text = ConfigManager.TemplatePath;
         }
 
         public override void ApplySettings()
         {
             try
             {
-                string templatePath = this.templatePathTxtbox.Text;
-                string ouputPath = this.ouputPathTxtbox.Text;
+                string templatePath = templatePathTxtbox.Text;
+                string ouputPath = ouputPathTxtbox.Text;
 
                 if(!Directory.Exists(templatePath)) Directory.CreateDirectory(templatePath);
                 if(!Directory.Exists(ouputPath)) Directory.CreateDirectory(ouputPath);
@@ -60,17 +50,17 @@ namespace CodeBuilder.WinForm.UI.OptionsPages
 
         private void ouputPathBtn_Click(object sender, EventArgs e)
         {
-            if (this.folderBrowserDialog.ShowDialog() == DialogResult.OK)
+            if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
             {
-                this.ouputPathTxtbox.Text = this.folderBrowserDialog.SelectedPath;
+                ouputPathTxtbox.Text = folderBrowserDialog.SelectedPath;
             }
         }
 
         private void templatePathBtn_Click(object sender, EventArgs e)
         {
-            if (this.folderBrowserDialog.ShowDialog() == DialogResult.OK)
+            if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
             {
-                this.templatePathTxtbox.Text = this.folderBrowserDialog.SelectedPath;
+                templatePathTxtbox.Text = folderBrowserDialog.SelectedPath;
             }
         }
     }

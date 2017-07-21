@@ -1,21 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
+// ReSharper disable once CheckNamespace
 namespace CodeBuilder.WinForm.UI
 {
-    using Util;
-    using Configuration;
-
     public partial class BaseOptionsPage : UserControl
     {
-        private string key;
-        private string title;
+        /// <summary>
+        /// option page is loaded
+        /// </summary>
         protected bool isLoaded;
 
         public BaseOptionsPage()
@@ -26,10 +19,10 @@ namespace CodeBuilder.WinForm.UI
         public BaseOptionsPage(string key)
             : this()
         {
-            this.key = key;
-            this.title = key;
+            Key = key;
+            Title = key;
             int dot = key.LastIndexOf('.');
-            if (dot >= 0) title = key.Substring(dot + 1);
+            if (dot >= 0) Title = key.Substring(dot + 1);
         }
 
         protected override void OnLoad(EventArgs e)
@@ -40,29 +33,34 @@ namespace CodeBuilder.WinForm.UI
 
         #region Properties
 
-        public string Key
-        {
-            get { return key; }
-        }
+        /// <summary>
+        /// option page key
+        /// </summary>
+        public string Key { get; }
 
-        public string Title
-        {
-            get { return title; }
-        }
+        /// <summary>
+        /// option page title
+        /// </summary>
+        public string Title { get; }
 
-        public bool IsLoaded
-        {
-            get { return this.isLoaded; }
-        }
+        /// <summary>
+        /// option page is loaded
+        /// </summary>
+        public bool IsLoaded => isLoaded;
 
         #endregion
 
         #region Public Methods
-
+        /// <summary>
+        /// load setting
+        /// </summary>
         public virtual void LoadSettings()
         {
         }
 
+        /// <summary>
+        /// ApplySetting
+        /// </summary>
         public virtual void ApplySettings()
         {
         }

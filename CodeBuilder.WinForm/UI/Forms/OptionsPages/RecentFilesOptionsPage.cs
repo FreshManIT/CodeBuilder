@@ -1,23 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 using CodeBuilder.Framework.Configuration;
+using CodeBuilder.Util;
+using CodeBuilder.WinForm.Properties;
 
+// ReSharper disable once CheckNamespace
 namespace CodeBuilder.WinForm.UI.OptionsPages
 {
-    using Configuration;
-    using Properties;
-    using Util;
-
     public partial class RecentFilesOptionsPage : BaseOptionsPage
     {
-        private static Logger logger = InternalTrace.GetLogger(typeof(RecentFilesOptionsPage));
-
         public RecentFilesOptionsPage()
         {
             InitializeComponent();
@@ -31,18 +21,18 @@ namespace CodeBuilder.WinForm.UI.OptionsPages
 
         public override void LoadSettings()
         {
-            this.isLoaded = true;
-            this.recentFilesCountTextBox.Text = ConfigManager.OptionSection.Options["Environment.RecentFiles.MaxFiles"].Value;
+            isLoaded = true;
+            recentFilesCountTextBox.Text = ConfigManager.OptionSection.Options["Environment.RecentFiles.MaxFiles"].Value;
             string value = ConfigManager.OptionSection.Options["Environment.RecentFiles.IsCheckFileExist"].Value;
-            this.checkFilesExistCheckBox.Checked = ConvertHelper.GetBoolean(value);
+            checkFilesExistCheckBox.Checked = ConvertHelper.GetBoolean(value);
         }
 
         public override void ApplySettings()
         {
             try
             {
-                ConfigManager.OptionSection.Options["Environment.RecentFiles.MaxFiles"].Value = this.recentFilesCountTextBox.Text;
-                ConfigManager.OptionSection.Options["Environment.RecentFiles.IsCheckFileExist"].Value = this.checkFilesExistCheckBox.Checked.ToString();
+                ConfigManager.OptionSection.Options["Environment.RecentFiles.MaxFiles"].Value = recentFilesCountTextBox.Text;
+                ConfigManager.OptionSection.Options["Environment.RecentFiles.IsCheckFileExist"].Value = checkFilesExistCheckBox.Checked.ToString();
                 ConfigManager.RefreshOptions();
                 ConfigManager.Save(); 
             }

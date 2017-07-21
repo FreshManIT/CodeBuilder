@@ -5,15 +5,32 @@ using System.Xml.Serialization;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 
+// ReSharper disable once CheckNamespace
 namespace CodeBuilder.Util
 {
+    /// <summary>
+    /// Serialize helper
+    /// </summary>
     public class SerializeHelper
     {
+        /// <summary>
+        /// xml serialize
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="obj"></param>
+        /// <param name="fileName"></param>
         public static void XmlSerialize<T>(T obj, string fileName)
         {
             XmlSerialize(obj, fileName, Encoding.UTF8);
         }
 
+        /// <summary>
+        /// xml serialize
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="obj"></param>
+        /// <param name="fileName"></param>
+        /// <param name="encoding"></param>
         public static void XmlSerialize<T>(T obj, string fileName,Encoding encoding)
         {
             var xmlns = new XmlSerializerNamespaces();
@@ -24,11 +41,24 @@ namespace CodeBuilder.Util
             writer.Close();
         }
 
+        /// <summary>
+        /// xml serialize
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public static string XmlSerialize<T>(T obj)
         {
             return XmlSerialize(obj, Encoding.UTF8);
         }
 
+        /// <summary>
+        /// xml serialize
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="obj"></param>
+        /// <param name="encoding"></param>
+        /// <returns></returns>
         public static string XmlSerialize<T>(T obj,Encoding encoding)
         {
             var xmlns = new XmlSerializerNamespaces();
@@ -46,11 +76,24 @@ namespace CodeBuilder.Util
             return resultStr;
         }
 
+        /// <summary>
+        /// xml deserialize
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
         public static T XmlDeserialize<T>(string fileName)
         {
             return XmlDeserialize<T>(fileName, Encoding.UTF8);
         }
 
+        /// <summary>
+        /// xml deserialize
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="fileName"></param>
+        /// <param name="encoding"></param>
+        /// <returns></returns>
         public static T XmlDeserialize<T>(string fileName, Encoding encoding)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(T));
@@ -61,11 +104,24 @@ namespace CodeBuilder.Util
             return obj;
         }
 
+        /// <summary>
+        /// xml deserialize
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="xmlText"></param>
+        /// <returns></returns>
         public static T XmlTextDeserialize<T>(string xmlText)
         {
             return XmlTextDeserialize<T>(xmlText, Encoding.UTF8);
         }
 
+        /// <summary>
+        /// xml deserialize
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="xmlText"></param>
+        /// <param name="encoding"></param>
+        /// <returns></returns>
         public static T XmlTextDeserialize<T>(string xmlText, Encoding encoding)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(T));
@@ -76,11 +132,24 @@ namespace CodeBuilder.Util
             return obj;
         }
 
+        /// <summary>
+        /// xml datacontract serialize
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public static string XmlDataContractSerialize<T>(T obj)
         {
             return XmlDataContractSerialize(obj, Encoding.UTF8);
         }
 
+        /// <summary>
+        /// xml datacontract serialize
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="obj"></param>
+        /// <param name="encoding"></param>
+        /// <returns></returns>
         public static string XmlDataContractSerialize<T>(T obj, Encoding encoding)
         {
             DataContractSerializer serializer = new DataContractSerializer(typeof(T));
@@ -96,11 +165,24 @@ namespace CodeBuilder.Util
             return resultStr;
         }
 
+        /// <summary>
+        /// xml datacontract deserialize
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="xmlText"></param>
+        /// <returns></returns>
         public static T XmlDataContractDeserialize<T>(string xmlText)
         {
             return XmlDataContractDeserialize<T>(xmlText, Encoding.UTF8);
         }
 
+        /// <summary>
+        /// xml datacontract deserialize
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="xmlText"></param>
+        /// <param name="encoding"></param>
+        /// <returns></returns>
         public static T XmlDataContractDeserialize<T>(string xmlText,Encoding encoding)
         {
             DataContractSerializer serializer = new DataContractSerializer(typeof(T));
@@ -111,6 +193,12 @@ namespace CodeBuilder.Util
             return obj;
         }
 
+        /// <summary>
+        /// Json serialize
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public static string JsonSerialize<T>(T obj)
         {
             DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(T));
@@ -126,10 +214,16 @@ namespace CodeBuilder.Util
             return resultStr;
         }
 
+        /// <summary>
+        /// Json Deserialize
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="json"></param>
+        /// <returns></returns>
         public static T JsonDeserialize<T>(string json)
         {
             DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(T));
-            MemoryStream ms = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(json.ToCharArray()));
+            MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(json.ToCharArray()));
             T obj = (T)serializer.ReadObject(ms);
             ms.Close();
 

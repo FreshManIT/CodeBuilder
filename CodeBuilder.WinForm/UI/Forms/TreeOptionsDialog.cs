@@ -6,25 +6,38 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using CodeBuilder.WinForm.UI.Forms;
 
 namespace CodeBuilder.WinForm.UI
 {
     public partial class TreeOptionsDialog : BaseOptionsDialog
     {
         private BaseOptionsPage current;
+        /// <summary>
+        /// enter in option page name
+        /// </summary>
         private static string initialPage;
 
+        /// <summary>
+        /// struck function
+        /// </summary>
         public TreeOptionsDialog()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// show which one page.
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="initialPageName"></param>
+        /// <param name="pages"></param>
         public static void Display(Form owner, string initialPageName, params BaseOptionsPage[] pages)
         {
             initialPage = initialPageName;
             using (TreeOptionsDialog dialog = new TreeOptionsDialog())
             {
-                owner.Site.Container.Add(dialog);
+                owner.Site.Container?.Add(dialog);
                 dialog.Font = owner.Font;
                 dialog.OptionsPages.AddRange(pages);
                 dialog.ShowDialog();
@@ -33,7 +46,7 @@ namespace CodeBuilder.WinForm.UI
 
         #region TreeView Event Handlers
 
-        private void optionTreeView_AfterSelect(object sender, System.Windows.Forms.TreeViewEventArgs e)
+        private void optionTreeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
             string key = e.Node.FullPath;
             BaseOptionsPage page = OptionsPages[key];

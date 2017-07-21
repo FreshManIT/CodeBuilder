@@ -1,18 +1,20 @@
 ﻿using System.Windows.Forms;
+using CodeBuilder.WinForm.Properties;
+using CodeBuilder.WinForm.UI.OptionsPages;
 
 namespace CodeBuilder.WinForm.UI
 {
-    using Properties;
-    using OptionsPages;
-
+    /// <summary>
+    /// OptionDialog
+    /// </summary>
     public class OptionsDialog
     {
-        public static void Display(Form owner)
-        {
-            Display(owner, null);
-        }
-
-        public static void Display(Form owner, string initialPage)
+        /// <summary>
+        /// Display option page.
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="initialPage"></param>
+        public static void Display(Form owner, string initialPage = null)
         {
             TreeOptionsDialog.Display(owner, initialPage,
                 new RecentFilesOptionsPage(Resources.EnvironmentRecentFiles),
