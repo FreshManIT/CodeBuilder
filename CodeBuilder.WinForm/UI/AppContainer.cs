@@ -14,35 +14,45 @@ namespace CodeBuilder.WinForm.UI
         }
 
         private ServiceContainer _services;
-        public IServiceContainer Services
-        {
-            get { return _services; }
-        }
 
+        /// <summary>
+        /// services
+        /// </summary>
+        public IServiceContainer Services => _services;
+
+        /// <summary>
+        /// Get service
+        /// </summary>
+        /// <param name="service"></param>
+        /// <returns></returns>
         protected override object GetService(Type service)
         {
-            object s = _services.GetService(service);
-            if (s == null) s = base.GetService(service);
+            object s = _services.GetService(service) ?? base.GetService(service);
             return s;
         }
 
+        /// <summary>
+        /// get site
+        /// </summary>
+        /// <param name="control"></param>
+        /// <returns></returns>
         public static ISite GetSite(Control control)
         {
             while (control != null && control.Site == null)
                 control = control.Parent;
-            return control == null ? null : control.Site;
+            return control?.Site;
         }
 
         public static IContainer GetContainer(Control control)
         {
             ISite site = GetSite(control);
-            return site == null ? null : site.Container;
+            return site?.Container;
         }
 
         public static object GetService(Control control, Type service)
         {
             ISite site = GetSite(control);
-            return site == null ? null : site.GetService(service);
+            return site?.GetService(service);
         }
 
         public static AppContainer GetAppContainer(Control control)

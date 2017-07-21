@@ -4,7 +4,6 @@ using CodeBuilder.Framework.Configuration;
 
 namespace CodeBuilder.WinForm
 {
-    using Configuration;
     using Properties;
     using UI;
     using Util;

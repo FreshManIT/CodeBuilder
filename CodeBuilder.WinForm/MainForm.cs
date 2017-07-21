@@ -63,6 +63,11 @@ namespace CodeBuilder.WinForm
             }
         }
 
+        /// <summary>
+        /// Save new generation setting file.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void fileSaveMenuItem_Click(object sender, EventArgs e)
         {
             if (!CheckParameters()) return;
@@ -96,6 +101,11 @@ namespace CodeBuilder.WinForm
             _currentGenerationSettingsFile = xmlFileName;
         }
 
+        /// <summary>
+        /// export pdm file.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void fileExportPdmMenuItem_Click(object sender, EventArgs e)
         {
             openFileDialog.Title = Resources.OpenPowerDesignerPDMFile;
@@ -125,11 +135,21 @@ namespace CodeBuilder.WinForm
             }
         }
 
+        /// <summary>
+        /// Load data source menu items.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void fileExportDataSourceMenuItem_MouseHover(object sender, EventArgs e)
         {
             AddDataSourceMenuItems(fileExportDataSourceMenuItem);
         }
 
+        /// <summary>
+        /// click data source menu item.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void fileExportDataSourceMenuItem_Click(object sender, EventArgs e)
         {
             ToolStripMenuItem menuItem = sender as ToolStripMenuItem;
@@ -156,6 +176,11 @@ namespace CodeBuilder.WinForm
             if (menuItem != null) statusBarReady.Text = string.Format(Resources.ExportDataSourceFormat, menuItem.Text);
         }
 
+        /// <summary>
+        /// Exit application
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void fileExitMenuItem_Click(object sender, EventArgs e)
         {
             Close();
@@ -218,6 +243,11 @@ namespace CodeBuilder.WinForm
             AddDataSourceMenuItems(exportDataSourceCtxMenuItem);
         }
 
+        /// <summary>
+        /// Clrea click.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void clearCtxMenuItem_Click(object sender, EventArgs e)
         {
             ModelManager.Clear();

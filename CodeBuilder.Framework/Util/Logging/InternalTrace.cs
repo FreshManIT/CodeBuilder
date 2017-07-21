@@ -14,16 +14,19 @@ namespace CodeBuilder.Util
     
 	public class InternalTrace
 	{
-        //private readonly static string TIME_FMT = "HH:mm:ss.fff";
-		private static bool initialized;
+        /// <summary>
+        /// had initialized
+        /// </summary>
+		private static bool _initialized;
 
-        private static InternalTraceWriter writer;
-        public static InternalTraceWriter Writer
-        {
-            get { return writer; }
-        }
+        private static InternalTraceWriter _writer;
 
-		public static InternalTraceLevel Level;
+        /// <summary>
+        /// Write log
+        /// </summary>
+        public static InternalTraceWriter Writer => _writer;
+
+	    public static InternalTraceLevel Level;
         public static void Initialize(string logName)
         {
             int lev = (int) new System.Diagnostics.TraceSwitch("Trace", "CodeBuilder internal trace").Level;
@@ -32,25 +35,25 @@ namespace CodeBuilder.Util
 
         public static void Initialize(string logName, InternalTraceLevel level)
         {
-			if (!initialized)
+			if (!_initialized)
 			{
 				Level = level;
 
-				if (writer == null && Level > InternalTraceLevel.Off)
+				if (_writer == null && Level > InternalTraceLevel.Off)
 				{
-					writer = new InternalTraceWriter(logName);
-					writer.WriteLine("InternalTrace: Initializing at level " + Level.ToString());
+					_writer = new InternalTraceWriter(logName);
+					_writer.WriteLine("InternalTrace: Initializing at level " + Level);
 				}
 
-				initialized = true;
+				_initialized = true;
 			}
         }
 
         public static void ReInitialize(string logName, InternalTraceLevel level)
         {
-            if (initialized){ 
+            if (_initialized){ 
                 Close();
-                initialized=false; 
+                _initialized=false; 
             }
 
             Initialize(logName, level);
@@ -58,16 +61,14 @@ namespace CodeBuilder.Util
 
         public static void Flush()
         {
-            if (writer != null)
-                writer.Flush();
+            _writer?.Flush();
         }
 
-        public static void Close()
+	    public static void Close()
         {
-            if (writer != null)
-                writer.Close();
+	        _writer?.Close();
 
-            writer = null;
+	        _writer = null;
         }
 
         public static Logger GetLogger(string name)
@@ -88,7 +89,7 @@ namespace CodeBuilder.Util
         public static void Log(InternalTraceLevel level, string message, string category, Exception ex)
         {
             Writer.WriteLine("{0} {1,-5} [{2,2}] {3}: {4}",
-                DateTime.Now.ToString(),
+                DateTime.Now,
                 level == InternalTraceLevel.Verbose ? "Debug" : level.ToString(),
                 System.Threading.Thread.CurrentThread.ManagedThreadId,
                 category,

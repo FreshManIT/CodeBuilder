@@ -1,15 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{DDF639DF-0127-4219-9802-731DB99D14AA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeBuilder.Framework.Test", "CodeBuilder.Framework.Test\CodeBuilder.Framework.Test.csproj", "{044ABF92-C86A-4B2C-833F-68EFF036435E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{D3AE2801-8D88-41AD-8CF0-ADC2721F9E00}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeBuilder.Console", "CodeBuilder.Console\CodeBuilder.Console.csproj", "{44327B3E-A328-4E51-9198-A5D153E5D1E1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeBuilder.Framework", "CodeBuilder.Framework\CodeBuilder.Framework.csproj", "{1FDA5B2E-BD7D-4BB1-9579-C25130156A43}"
 EndProject
@@ -38,18 +36,6 @@ Global
 		{044ABF92-C86A-4B2C-833F-68EFF036435E}.Release|Mixed Platforms.Deploy.0 = Release|x86
 		{044ABF92-C86A-4B2C-833F-68EFF036435E}.Release|x86.ActiveCfg = Release|x86
 		{044ABF92-C86A-4B2C-833F-68EFF036435E}.Release|x86.Build.0 = Release|x86
-		{44327B3E-A328-4E51-9198-A5D153E5D1E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{44327B3E-A328-4E51-9198-A5D153E5D1E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{44327B3E-A328-4E51-9198-A5D153E5D1E1}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{44327B3E-A328-4E51-9198-A5D153E5D1E1}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{44327B3E-A328-4E51-9198-A5D153E5D1E1}.Debug|x86.ActiveCfg = Debug|x86
-		{44327B3E-A328-4E51-9198-A5D153E5D1E1}.Debug|x86.Build.0 = Debug|x86
-		{44327B3E-A328-4E51-9198-A5D153E5D1E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{44327B3E-A328-4E51-9198-A5D153E5D1E1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{44327B3E-A328-4E51-9198-A5D153E5D1E1}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{44327B3E-A328-4E51-9198-A5D153E5D1E1}.Release|Mixed Platforms.Build.0 = Release|x86
-		{44327B3E-A328-4E51-9198-A5D153E5D1E1}.Release|x86.ActiveCfg = Release|x86
-		{44327B3E-A328-4E51-9198-A5D153E5D1E1}.Release|x86.Build.0 = Release|x86
 		{1FDA5B2E-BD7D-4BB1-9579-C25130156A43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1FDA5B2E-BD7D-4BB1-9579-C25130156A43}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1FDA5B2E-BD7D-4BB1-9579-C25130156A43}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -77,7 +63,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{044ABF92-C86A-4B2C-833F-68EFF036435E} = {DDF639DF-0127-4219-9802-731DB99D14AA}
-		{44327B3E-A328-4E51-9198-A5D153E5D1E1} = {D3AE2801-8D88-41AD-8CF0-ADC2721F9E00}
 		{1FDA5B2E-BD7D-4BB1-9579-C25130156A43} = {D3AE2801-8D88-41AD-8CF0-ADC2721F9E00}
 		{B699B723-2FA2-4318-8C3B-653034E6EABF} = {D3AE2801-8D88-41AD-8CF0-ADC2721F9E00}
 	EndGlobalSection

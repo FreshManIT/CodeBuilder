@@ -8,7 +8,7 @@ namespace CodeBuilder.Framework.Configuration
 {
     public class ConfigManager
     {
-        private static System.Configuration.Configuration config;
+        private static System.Configuration.Configuration _config;
         private static readonly string settingsSectionName = "codebuilder/settingsSection";
         private static readonly string typeMappingSectionName = "codebuilder/typeMappingSection";
         private static readonly string dataSourceSectionName = "codebuilder/dataSourceSection";
@@ -43,34 +43,26 @@ namespace CodeBuilder.Framework.Configuration
 
         public static TemplateSection TemplateSection
         {
-            get { return GetConfigSection<TemplateSection>(templateSectionName); ; }
+            get { return GetConfigSection<TemplateSection>(templateSectionName); }
         }
 
         public static OptionSection OptionSection
         {
-            get { return GetConfigSection<OptionSection>(optionSectionName); ; }
+            get { return GetConfigSection<OptionSection>(optionSectionName); }
         }
 
-        private static string applicationDataDirectory;
+        private static string _applicationDataDirectory;
         public static string ApplicationDataDirectory
         {
             get
             {
-                if (applicationDataDirectory == null)
-                {
-                    applicationDataDirectory = Path.Combine(
-                        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                        "CodeBuilder");
-                }
-
-                return applicationDataDirectory;
+                return _applicationDataDirectory ?? (_applicationDataDirectory = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                    "CodeBuilder"));
             }
         }
 
-        public static string AppCurrentDirectory
-        {
-            get { return Environment.CurrentDirectory; }
-        }
+        public static string AppCurrentDirectory => Environment.CurrentDirectory;
 
         public static string TemplatePath
         {
@@ -104,10 +96,7 @@ namespace CodeBuilder.Framework.Configuration
             }
         }
 
-        public static string LogDirectory
-        {
-            get { return Path.Combine(Environment.CurrentDirectory, "Logs"); }
-        }
+        public static string LogDirectory => Path.Combine(Environment.CurrentDirectory, "Logs");
 
         public static string HelpUrl
         {
@@ -137,7 +126,7 @@ namespace CodeBuilder.Framework.Configuration
                 string feedbackUrl = SettingsSection.AppSettings["feedbackUrl"].Value;
                 if (feedbackUrl != null) return feedbackUrl;
 
-                return feedbackUrl = "http://www.dengzhiwei.com/category/codebuilder-feedback";
+                return "http://www.dengzhiwei.com/category/codebuilder-feedback";
             }
         }
 
@@ -148,7 +137,7 @@ namespace CodeBuilder.Framework.Configuration
                 string onlineTemplateUrl = SettingsSection.AppSettings["onlineTemplateUrl"].Value;
                 if (onlineTemplateUrl != null) return onlineTemplateUrl;
 
-                return onlineTemplateUrl = "http://www.dengzhiwei.com/category/codebuilder-templates";
+                return "http://www.dengzhiwei.com/category/codebuilder-templates";
             }
         }
         #endregion
@@ -184,8 +173,8 @@ namespace CodeBuilder.Framework.Configuration
         {
             try
             {
-                config.Save(ConfigurationSaveMode.Modified);
-                config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                _config.Save(ConfigurationSaveMode.Modified);
+                _config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             }
             catch (Exception ex)
             {
@@ -201,7 +190,7 @@ namespace CodeBuilder.Framework.Configuration
         {
             try
             {
-                config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                _config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             }
             catch (Exception ex)
             {
@@ -209,11 +198,11 @@ namespace CodeBuilder.Framework.Configuration
             }
         }
 
-        private static T GetConfigSection<T>(string name) where T:ConfigurationSection
+        private static T GetConfigSection<T>(string name) where T : ConfigurationSection
         {
             try
             {
-                return (T)config.GetSection(name);
+                return (T)_config.GetSection(name);
             }
             catch (Exception ex)
             {
