@@ -1,0 +1,28 @@
+/*|========================================================|
+  |=============This code is auto by CodeBuilder===========|
+  |================ Organization:FreshManIT+  =============|
+  |==========Any Question please tell me:FreshManIT========|
+  |===https://github.com/FreshManIT/CodeBuilder/issues ====|
+  |===============OR Email:qinbocai@sina.cn================|
+  |========================================================|
+**/
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace $!{tdo.Package}
+{
+    /// <summary>
+    /// ${tdo.ModelObject.OriginalName} table in $!{tdo.DataBase}
+    /// </summary>
+    public class  ${tdo.ModelObject.Id}
+    {
+        #foreach($column in $tdo.ModelObject.Columns.Values)
+        /// <summary>
+        /// $column.Id
+        /// </summary>
+        public $column.LanguageType ${column.Name} { get; set; }
+        #end
+    }
+}

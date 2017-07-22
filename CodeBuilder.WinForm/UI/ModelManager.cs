@@ -5,39 +5,34 @@ namespace CodeBuilder.WinForm.UI
 {
     using PhysicalDataModel;
 
-    public class ModelManager
+    public static class ModelManager
     {
-        private static Dictionary<string, Model> models = new Dictionary<string, Model>(5);
-
         public static void Add(string key, Model model)
         {
-            if (models.ContainsKey(key))
-                models[key] = model;
+            if (Models.ContainsKey(key))
+                Models[key] = model;
             else
-                models.Add(key, model);
+                Models.Add(key, model);
         }
 
         public static void Clear()
         {
-            models.Clear();
+            Models.Clear();
         }
 
         public static bool Remove(string key)
         {
-            if (models.ContainsKey(key))
-                return models.Remove(key);
+            if (Models.ContainsKey(key))
+                return Models.Remove(key);
             return true;
         }
 
-        public static Dictionary<string, Model> Models
-        {
-            get { return models; }
-        }
+        private static Dictionary<string, Model> Models { get; } = new Dictionary<string, Model>(5);
 
         public static string GetDatabase(string key)
         {
-            if (models.ContainsKey(key))
-                return models[key].Database;
+            if (Models.ContainsKey(key))
+                return Models[key].Database;
             return string.Empty;
         }
 
@@ -52,9 +47,7 @@ namespace CodeBuilder.WinForm.UI
 
         public static Dictionary<string, Model> Clone()
         {
-            return models.Select(x => x).ToDictionary(y => y.Key, z => z.Value);
+            return Models.Select(x => x).ToDictionary(y => y.Key, z => z.Value);
         }
-
-        private ModelManager() { }
     }
 }

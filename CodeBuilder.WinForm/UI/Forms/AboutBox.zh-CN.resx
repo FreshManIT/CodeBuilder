@@ -183,7 +183,7 @@
     <value>23</value>
   </data>
   <data name="copyright.Text" xml:space="preserve">
-    <value>Copyright (C) 2009-2016 Tom Deng
+    <value>Copyright (C) 2009-2020 FreshManIT 
 All Rights Reserved.</value>
   </data>
   <data name="&gt;&gt;copyright.Name" xml:space="preserve">
@@ -238,7 +238,7 @@ All Rights Reserved.</value>
     <value>21</value>
   </data>
   <data name="label6.Text" xml:space="preserve">
-    <value>Emil Song,Richard Li</value>
+    <value>Emil qinbocai@sina.cn</value>
   </data>
   <data name="&gt;&gt;label6.Name" xml:space="preserve">
     <value>label6</value>
@@ -323,7 +323,7 @@ All Rights Reserved.</value>
     <value>18</value>
   </data>
   <data name="infoLinkLabel.Text" xml:space="preserve">
-    <value>https://github.com/xianrendzw/CodeBuilder/</value>
+    <value>https://github.com/FreshManIT/CodeBuilder/</value>
   </data>
   <data name="&gt;&gt;infoLinkLabel.Name" xml:space="preserve">
     <value>infoLinkLabel</value>
@@ -350,7 +350,7 @@ All Rights Reserved.</value>
     <value>17</value>
   </data>
   <data name="label3.Text" xml:space="preserve">
-    <value>Tom Deng,Peter Chen,Gallop Chen,Taven Li,Chanle Chen,Thomas Lee,Zerg Zhou,BearSon</value>
+    <value>FreshMan Tom Deng,Peter Chen,Gallop Chen,Taven Li,Chanle Chen,Thomas Lee,Zerg Zhou,BearSon</value>
   </data>
   <data name="&gt;&gt;label3.Name" xml:space="preserve">
     <value>label3</value>

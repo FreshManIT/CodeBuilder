@@ -15,14 +15,13 @@ namespace CodeBuilder.Framework.Configuration
         private static readonly string templateSectionName = "codebuilder/templateSection";
         private static readonly string optionSectionName = "codebuilder/optionSection";
 
-        #region Class Constructor
-
+        /// <summary>
+        /// Constructor
+        /// </summary>
         static ConfigManager()
         {
             LoadConfiguration();
         }
-
-        #endregion
 
         #region Public Properties
 
@@ -105,7 +104,7 @@ namespace CodeBuilder.Framework.Configuration
                 string helpUrl = SettingsSection.AppSettings["helpUrl"].Value;
                 if (helpUrl != null) return helpUrl;
 
-                helpUrl = "http://www.dengzhiwei.com/category/codebuilder";
+                helpUrl = "https://github.com/FreshManIT/CodeBuilder/blob/master/README.md";
                 string localPath = Path.Combine(AppCurrentDirectory, @"doc/index.html");
                 if (File.Exists(localPath))
                 {
@@ -116,28 +115,6 @@ namespace CodeBuilder.Framework.Configuration
                     helpUrl = uri.ToString();
                 }
                 return helpUrl;
-            }
-        }
-
-        public static string FeedbackUrl
-        {
-            get
-            {
-                string feedbackUrl = SettingsSection.AppSettings["feedbackUrl"].Value;
-                if (feedbackUrl != null) return feedbackUrl;
-
-                return "http://www.dengzhiwei.com/category/codebuilder-feedback";
-            }
-        }
-
-        public static string OnlineTemplateUrl
-        {
-            get
-            {
-                string onlineTemplateUrl = SettingsSection.AppSettings["onlineTemplateUrl"].Value;
-                if (onlineTemplateUrl != null) return onlineTemplateUrl;
-
-                return "http://www.dengzhiwei.com/category/codebuilder-templates";
             }
         }
         #endregion

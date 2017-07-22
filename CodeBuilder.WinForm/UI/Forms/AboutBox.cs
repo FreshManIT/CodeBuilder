@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
+using System.Diagnostics;
 using System.Reflection;
+using System.Windows.Forms;
 
+// ReSharper disable once CheckNamespace
 namespace CodeBuilder.WinForm.UI
 {
     public partial class AboutBox : Form
@@ -15,17 +11,17 @@ namespace CodeBuilder.WinForm.UI
         public AboutBox()
         {
             InitializeComponent();
-            this.SetAboutInfo();
+            SetAboutInfo();
         }
 
         private void OkButton_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void infoLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start(this.infoLinkLabel.Text);
+            Process.Start(infoLinkLabel.Text);
             infoLinkLabel.LinkVisited = true;
         }
 
@@ -33,7 +29,7 @@ namespace CodeBuilder.WinForm.UI
         {
             Assembly executingAssembly = Assembly.GetExecutingAssembly();
             string versionText = executingAssembly.GetName().Version.ToString();
-            this.versionLabel.Text = versionText;
+            versionLabel.Text = versionText;
 
             dotNetVersionLabel.Text = string.Format(".Net Framework {0}", Environment.Version);
         }

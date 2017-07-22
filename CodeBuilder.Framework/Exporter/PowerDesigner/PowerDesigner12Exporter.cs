@@ -11,14 +11,14 @@ namespace CodeBuilder.DataSource.Exporter
     using PhysicalDataModel;
     using Util;
 
-    public class PowerDesigner12Exporter : BaseExporter,IExporter
+    public class PowerDesigner12Exporter : BaseExporter
     {
         #region IExporter Members
 
         public override Model Export(string connectionString)
         {
             if (connectionString == null)
-                throw new ArgumentNullException("connectionString");
+                throw new ArgumentNullException(nameof(connectionString));
 
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(connectionString);
@@ -30,10 +30,8 @@ namespace CodeBuilder.DataSource.Exporter
             XmlNodeList tableNodes = root.GetElementsByTagName("c:Tables");
             XmlNodeList viewNodes = root.GetElementsByTagName("c:Views");
 
-            if (tableNodes != null &&
-                tableNodes[0] != null) model.Tables = this.GetTables(tableNodes[0].ChildNodes);
-            if (viewNodes != null &&
-                viewNodes[0] != null) model.Views = this.GetViews(viewNodes[0].ChildNodes);
+            if (tableNodes[0] != null) model.Tables = this.GetTables(tableNodes[0].ChildNodes);
+            if (viewNodes[0] != null) model.Views = this.GetViews(viewNodes[0].ChildNodes);
 
             return model;
         }
@@ -50,17 +48,20 @@ namespace CodeBuilder.DataSource.Exporter
             Tables tables = new Tables(tableNodes.Count);
             foreach (XmlNode tableNode in tableNodes)
             {
-                string id = tableNode.Attributes["Id"].InnerText;
-                string displayName = tableNode["a:Name"].InnerText;
-                string name = tableNode["a:Code"].InnerText;
-                string comment = tableNode["a:Comment"] != null ? tableNode["a:Comment"].InnerText : string.Empty;
+                if (tableNode.Attributes != null)
+                {
+                    string id = tableNode.Attributes["Id"].InnerText;
+                    string displayName = tableNode["a:Name"].InnerText;
+                    string name = tableNode["a:Code"].InnerText;
+                    string comment = tableNode["a:Comment"] != null ? tableNode["a:Comment"].InnerText : string.Empty;
 
-                Table table = new Table(id, displayName, name, comment);
-                table.OriginalName = name;
-                table.Columns = this.GetColumns(tableNode);
-                table.Keys = this.GetKeys(tableNode, table.Columns);
-                table.PrimaryKeys = this.GetPrimaryKeys(tableNode, table.Keys);
-                tables.Add(id, table);
+                    Table table = new Table(id, displayName, name, comment);
+                    table.OriginalName = name;
+                    table.Columns = this.GetColumns(tableNode);
+                    table.Keys = this.GetKeys(tableNode, table.Columns);
+                    table.PrimaryKeys = this.GetPrimaryKeys(tableNode, table.Keys);
+                    tables.Add(id, table);
+                }
             }
 
             return tables;

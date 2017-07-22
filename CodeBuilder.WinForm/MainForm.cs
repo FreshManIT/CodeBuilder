@@ -94,7 +94,7 @@ namespace CodeBuilder.WinForm
 
             try
             {
-                SerializeHelper.XmlSerialize(settings,xmlFileName);
+                SerializeHelper.XmlSerialize(settings, xmlFileName);
             }
             catch (Exception ex)
             {
@@ -122,13 +122,13 @@ namespace CodeBuilder.WinForm
 
                 try
                 {
-                    TreeNode rootNode = ExportModelHelper.ExportPDM(pdmFileName, treeView);
+                    TreeNode rootNode = ExportModelHelper.ExportPdm(pdmFileName, treeView);
                     rootNode.ExpandAll();
                     treeView.SelectedNode = rootNode;
                 }
                 catch (Exception ex)
                 {
-                    if (treeView.Nodes.Count > 0) 
+                    if (treeView.Nodes.Count > 0)
                         treeView.Nodes[treeView.Nodes.Count - 1].Remove();
 
                     Logger.Error(Resources.ExportPDMFileFailure, ex);
@@ -205,11 +205,21 @@ namespace CodeBuilder.WinForm
             OptionsDialog.Display(this);
         }
 
+        /// <summary>
+        /// data source manager page.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void toolsDSConfigMenuItem_Click(object sender, EventArgs e)
         {
-            OptionsDialog.Display(this,Resources.DataSourceManagerDataSources);
+            OptionsDialog.Display(this, Resources.DataSourceManagerDataSources);
         }
 
+        /// <summary>
+        /// templates option page.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void toolsTemplatesMenuItem_Click(object sender, EventArgs e)
         {
             OptionsDialog.Display(this, Resources.TemplateManagerTemplates);
@@ -218,16 +228,21 @@ namespace CodeBuilder.WinForm
 
         #region Help
 
+        /// <summary>
+        /// help page.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void helpF1MenuItem_Click(object sender, EventArgs e)
         {
             Process.Start(ConfigManager.HelpUrl);
         }
 
-        private void helpFeedbackMenuItem_Click(object sender, EventArgs e)
-        {
-            Process.Start(ConfigManager.HelpUrl);
-        }
-
+        /// <summary>
+        /// About us
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void helpAboutMenuItem_Click(object sender, EventArgs e)
         {
             using (AboutBox aboutBox = new AboutBox())
@@ -243,11 +258,21 @@ namespace CodeBuilder.WinForm
         #region [3 Context Menu Handlers]
 
         #region TreeView
+        /// <summary>
+        /// load data from pdm file.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void exportPDMCtxMenuItem_Click(object sender, EventArgs e)
         {
             fileExportPdmMenuItem_Click(sender, e);
         }
 
+        /// <summary>
+        /// mouse hover datasource menu.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void exportDataSourceCtxMenuItem_MouseHover(object sender, EventArgs e)
         {
             AddDataSourceMenuItems(exportDataSourceCtxMenuItem);
@@ -269,44 +294,79 @@ namespace CodeBuilder.WinForm
         #endregion
 
         #region Generation SettingsSection
+
+        /// <summary>
+        /// open gensetting config file.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void openGenSettingsCtxMenuItem_Click(object sender, EventArgs e)
         {
             fileOpenMenuItem_Click(sender, e);
         }
 
+        /// <summary>
+        /// save gensetting menu item.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void saveGenSettingCtxMenuItem_Click(object sender, EventArgs e)
         {
             fileSaveMenuItem_Click(sender, e);
         }
 
+        /// <summary>
+        /// beging auto code.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void generateCtxMenuItem_Click(object sender, EventArgs e)
         {
             generateBtn_Click(sender, e);
         }
-   
+
         #endregion
 
         #endregion
 
         #region [4 TreeView Handlers]
-
+        /// <summary>
+        /// collapse tree node.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void treeView_AfterCollapse(object sender, TreeViewEventArgs e)
         {
             e.Node.ImageIndex = 0;
             e.Node.SelectedImageIndex = 0;
         }
 
+        /// <summary>
+        /// expand tree node.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void treeView_AfterExpand(object sender, TreeViewEventArgs e)
         {
             e.Node.ImageIndex = 1;
             e.Node.SelectedImageIndex = 1;
         }
 
+        /// <summary>
+        /// check one node
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void treeView_AfterCheck(object sender, TreeViewEventArgs e)
         {
             ExportModelHelper.CheckedTreeNode(e.Node);
         }
 
+        /// <summary>
+        /// select tree node.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void treeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
             if (e.Node.Parent == null && e.Node != null)
@@ -319,15 +379,26 @@ namespace CodeBuilder.WinForm
 
         #region [5 Generation Settings Handlers]
 
+        /// <summary>
+        /// save setting.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void saveSettingsBtn_Click(object sender, EventArgs e)
         {
             fileSaveMenuItem_Click(sender, e);
         }
 
+        /// <summary>
+        /// begin auto code.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void generateBtn_Click(object sender, EventArgs e)
-        {   
+        {
             if (!CheckParameters()) return;
             var generationObjects = GenerationHelper.GetGenerationObjects(treeView);
+            //get checked node number.
             int genObjectCount = generationObjects.Sum(x => x.Value.Count);
             if (genObjectCount == 0)
             {
@@ -343,7 +414,7 @@ namespace CodeBuilder.WinForm
 
             GenerationParameter parameter = new GenerationParameter(
                 ModelManager.Clone(),
-                GenerationHelper.GetGenerationObjects(treeView),
+                generationObjects,
                 GetGenerationSettings());
 
             try
@@ -356,6 +427,11 @@ namespace CodeBuilder.WinForm
             }
         }
 
+        /// <summary>
+        /// code generation save.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void codeGeneration_Completed(object sender, GenerationCompletedEventArgs args)
         {
             generateBtn.Enabled = true;
@@ -364,6 +440,10 @@ namespace CodeBuilder.WinForm
             SetGenFileNameLabel();
         }
 
+        /// <summary>
+        /// Change progress value.
+        /// </summary>
+        /// <param name="args"></param>
         private void codeGeneration_ProgressChanged(GenerationProgressChangedEventArgs args)
         {
             genProgressBar.Value = args.ProgressPercentage;
@@ -373,22 +453,42 @@ namespace CodeBuilder.WinForm
             statusBarReady.Text = args.CurrentFileName;
         }
 
+        /// <summary>
+        /// changed language
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void languageCombx_SelectedIndexChanged(object sender, EventArgs e)
         {
             statusBarLanguage.Text = languageCombx.Text;
             ChangeTemplateListBox(languageCombx.Text, templateEngineCombox.Text);
         }
 
+        /// <summary>
+        /// file encoding changed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void codeFileEncodingCombox_SelectedIndexChanged(object sender, EventArgs e)
         {
             statusBarEncoding.Text = codeFileEncodingCombox.Text;
         }
 
+        /// <summary>
+        /// engine changed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void templateEngineCombox_SelectedIndexChanged(object sender, EventArgs e)
         {
             ChangeTemplateListBox(languageCombx.Text, templateEngineCombox.Text);
         }
 
+        /// <summary>
+        /// brower file
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void currentGenFileNameLbl_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(currentGenFileNameLbl.Text)) return;
@@ -491,7 +591,6 @@ namespace CodeBuilder.WinForm
                 if (template.Language.Equals(language, StringComparison.CurrentCultureIgnoreCase) &&
                     template.Engine.Equals(engine, StringComparison.CurrentCultureIgnoreCase))
                 {
-
                     templateListBox.Items.Add(new TemplateListBoxItem(template.Name, template.DisplayName));
                     templateListBox.DisplayMember = "DisplayName";
                 }
@@ -532,11 +631,17 @@ namespace CodeBuilder.WinForm
         /// <returns></returns>
         private GenerationSettings GetGenerationSettings()
         {
-            GenerationSettings settings = new GenerationSettings(languageCombx.Text,
-                templateEngineCombox.Text, packageTxtBox.Text, tablePrefixTxtBox.Text,
-                authorTxtBox.Text, versionTxtBox.Text,
-                templateListBox.SelectedItems.Cast<TemplateListBoxItem>().Select(x=>x.Name).ToArray(),
-                codeFileEncodingCombox.Text, isOmitTablePrefixChkbox.Checked, isStandardizeNameChkbox.Checked);
+            GenerationSettings settings = new GenerationSettings(
+                languageCombx.Text,
+                templateEngineCombox.Text,
+                packageTxtBox.Text,
+                tablePrefixTxtBox.Text,
+                authorTxtBox.Text,
+                versionTxtBox.Text,
+                templateListBox.SelectedItems.Cast<TemplateListBoxItem>().Select(x => x.Name).ToArray(),
+                codeFileEncodingCombox.Text,
+                isOmitTablePrefixChkbox.Checked,
+                isStandardizeNameChkbox.Checked);
             return settings;
         }
 
@@ -572,7 +677,12 @@ namespace CodeBuilder.WinForm
         /// </summary>
         private class TemplateListBoxItem
         {
-            public TemplateListBoxItem(string name,string displayName)
+            /// <summary>
+            /// construct function
+            /// </summary>
+            /// <param name="name"></param>
+            /// <param name="displayName"></param>
+            public TemplateListBoxItem(string name, string displayName)
             {
                 Name = name;
                 DisplayName = displayName;

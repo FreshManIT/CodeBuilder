@@ -16,10 +16,9 @@ namespace CodeBuilder.DataSource.Exporter
         public override Model Export(string connectionString)
         {
             if (connectionString == null)
-                throw new ArgumentNullException("connectionString");
+                throw new ArgumentNullException(nameof(connectionString));
 
-            Model model = new Model();
-            model.Database = "SqlServer2000";
+            Model model = new Model {Database = "SqlServer2000"};
 
             return model;
         }

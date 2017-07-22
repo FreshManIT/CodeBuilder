@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿ // ReSharper disable once CheckNamespace
 namespace CodeBuilder.PhysicalDataModel
 {
     public class View : BaseTable
@@ -20,7 +16,7 @@ namespace CodeBuilder.PhysicalDataModel
         public View(string id, string displayName, string name, string comment)
             : base(id, displayName, name, comment)
         {
-            this._mataTypeName = "view";
+            _mataTypeName = "view";
         }
     }
 }

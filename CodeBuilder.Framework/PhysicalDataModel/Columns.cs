@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
+// ReSharper disable once CheckNamespace
 namespace CodeBuilder.PhysicalDataModel
 {
-    public class Columns : Dictionary<string,Column>
+    public class Columns : Dictionary<string, Column>
     {
         public Columns()
-            : base()
         {
         }
 

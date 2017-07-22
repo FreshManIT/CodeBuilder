@@ -6,11 +6,6 @@ namespace CodeBuilder.WinForm.UI
 {
     public partial class BaseOptionsPage : UserControl
     {
-        /// <summary>
-        /// option page is loaded
-        /// </summary>
-        protected bool isLoaded;
-
         public BaseOptionsPage()
         {
             InitializeComponent();
@@ -20,15 +15,12 @@ namespace CodeBuilder.WinForm.UI
             : this()
         {
             Key = key;
-            Title = key;
-            int dot = key.LastIndexOf('.');
-            if (dot >= 0) Title = key.Substring(dot + 1);
         }
 
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            if (!DesignMode) this.LoadSettings();
+            if (!DesignMode) LoadSettings();
         }
 
         #region Properties
@@ -39,14 +31,9 @@ namespace CodeBuilder.WinForm.UI
         public string Key { get; }
 
         /// <summary>
-        /// option page title
-        /// </summary>
-        public string Title { get; }
-
-        /// <summary>
         /// option page is loaded
         /// </summary>
-        public bool IsLoaded => isLoaded;
+        public bool IsLoaded { get; set; }
 
         #endregion
 

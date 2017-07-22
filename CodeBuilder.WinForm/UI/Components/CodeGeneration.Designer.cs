@@ -1,6 +1,6 @@
 ﻿namespace CodeBuilder.WinForm.UI
 {
-    partial class CodeGeneration
+    sealed partial class CodeGeneration
     {
         /// <summary>
         /// Required designer variable.
@@ -10,7 +10,7 @@
         /// <summary> 
         /// Clean up any resources being used.
         /// </summary>
-        /// <param displayName="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))

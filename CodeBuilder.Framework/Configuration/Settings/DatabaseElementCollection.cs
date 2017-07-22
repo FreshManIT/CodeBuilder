@@ -14,7 +14,7 @@ namespace CodeBuilder.Framework.Configuration.Settings
             get { return (DatabaseElement)BaseGet(name); }
             set
             {
-                if (base.BaseGet(name) != null)
+                if (BaseGet(name) != null)
                 {
                     int index = BaseIndexOf(BaseGet(name));
                     BaseRemoveAt(index);

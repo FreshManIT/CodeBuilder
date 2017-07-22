@@ -2,32 +2,35 @@
 <templateSection>
   <templates>
     <clear />
+    <template name="Model.cs.nv" displayName="C# TableModel"
+      language="C#" engine="NVelocity" fileName="Model.nv"
+      prefix="" suffix="DTO" url="" desc="" category="" version="1.0" />
     <template name="LightFramework-DTO.cs.nv" displayName="LightFramework-DTO"
-      language="C#" engine="NVelocity" fileName="csharp\NVelocity\LightFramework-DTO.nv"
+      language="C#" engine="NVelocity" fileName="LightFramework-DTO.nv"
       prefix="" suffix="DTO" url="" desc="" category="" version="1.0" />
     <template name="LightFramework-DAL.cs.nv" displayName="LightFramework-DAL"
-      language="C#" engine="NVelocity" fileName="csharp\NVelocity\LightFramework-DAL.nv"
+      language="C#" engine="NVelocity" fileName="LightFramework-DAL.nv"
       prefix="" suffix="" url="" desc="" category="" version="1.0" />
     <template name="LightFramework-Biz.cs.nv" displayName="LightFramework-Biz"
-      language="C#" engine="NVelocity" fileName="csharp\NVelocity\LightFramework-Biz.nv"
+      language="C#" engine="NVelocity" fileName="LightFramework-Biz.nv"
       prefix="" suffix="Biz" url="" desc="" category="" version="1.0" />
     <template name="LightFramework-View.cs.nv" displayName="LightFramework-View"
-      language="C#" engine="NVelocity" fileName="csharp\NVelocity\LightFramework-View.nv"
+      language="C#" engine="NVelocity" fileName="LightFramework-View.nv"
       prefix="" suffix="" url="" desc="" category="" version="1.0" />
     <template name="LightFramework-DTO.java.nv" displayName="LightFramework-DTO"
-      language="JAVA" engine="NVelocity" fileName="java\NVelocity\LightFramework-DTO.nv"
+      language="JAVA" engine="NVelocity" fileName="LightFramework-DTO.nv"
       prefix="" suffix="Entity" url="" desc="" category="" version="1.0" />
     <template name="LightFramework-DAL.java.nv" displayName="LightFramework-DAL"
-      language="JAVA" engine="NVelocity" fileName="java\NVelocity\LightFramework-DAL.nv"
+      language="JAVA" engine="NVelocity" fileName="LightFramework-DAL.nv"
       prefix="" suffix="DAO" url="" desc="" category="" version="1.0" />
-    <template name="JPA-VO.java.nv" displayName="JPA-VO" language="JAVA"
-      engine="NVelocity" fileName="java\NVelocity\JPA-VO.nv" prefix=""
+    <template name="JPA-VO.java.nv" displayName="JPA-VO"
+      language="JAVA" engine="NVelocity" fileName="JPA-VO.nv" prefix=""
       suffix="VO" url="" desc="" category="" version="1.0" />
-    <template name="mybatis-mapper-id.nv" displayName="mybatis-mapper-id" language="MyBatisMapper"
-     engine="NVelocity" fileName="mybatisMapper\NVelocity\mybatis-mapper-id.nv" prefix=""
+    <template name="mybatis-mapper-id.nv" displayName="mybatis-mapper-id"
+      language="MyBatisMapper" engine="NVelocity" fileName="mybatis-mapper-id.nv" prefix=""
      suffix="" url="" desc="" category="" version="1.0" />
-    <template name="mybatis-mapper-without-id.nv" displayName="mybatis-mapper-without-id" language="MyBatisMapper"
-     engine="NVelocity" fileName="mybatisMapper\NVelocity\mybatis-mapper-id.nv" prefix=""
+    <template name="mybatis-mapper-without-id.nv" displayName="mybatis-mapper-without-id"
+      language="MyBatisMapper" engine="NVelocity" fileName="mybatis-mapper-id.nv" prefix=""
      suffix="" url="" desc="" category="" version="1.0" />
   </templates>
 </templateSection>

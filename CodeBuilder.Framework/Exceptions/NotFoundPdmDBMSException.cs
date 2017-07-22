@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using CodeBuilder.Framework.Properties;
 
 namespace CodeBuilder.Exceptions
 {
-    using Framework.Properties;
-
     public class NotFoundPdmDBMSException : Exception
     {
         public NotFoundPdmDBMSException()

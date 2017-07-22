@@ -93,7 +93,6 @@
             this.toolsOptionsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.helpF1MenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpFeedbackMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpSeparator1MenuItem = new System.Windows.Forms.ToolStripSeparator();
             this.helpAboutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainStatusStrip = new System.Windows.Forms.StatusStrip();
@@ -545,7 +544,6 @@
             // 
             this.helpMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.helpF1MenuItem,
-            this.helpFeedbackMenuItem,
             this.helpSeparator1MenuItem,
             this.helpAboutMenuItem});
             this.helpMenu.Name = "helpMenu";
@@ -557,12 +555,6 @@
             this.helpF1MenuItem.Name = "helpF1MenuItem";
             resources.ApplyResources(this.helpF1MenuItem, "helpF1MenuItem");
             this.helpF1MenuItem.Click += new System.EventHandler(this.helpF1MenuItem_Click);
-            // 
-            // helpFeedbackMenuItem
-            // 
-            this.helpFeedbackMenuItem.Name = "helpFeedbackMenuItem";
-            resources.ApplyResources(this.helpFeedbackMenuItem, "helpFeedbackMenuItem");
-            this.helpFeedbackMenuItem.Click += new System.EventHandler(this.helpFeedbackMenuItem_Click);
             // 
             // helpSeparator1MenuItem
             // 
@@ -729,7 +721,6 @@
         private System.Windows.Forms.Label templateEngineLbl;
         private System.Windows.Forms.Label databaseNameLbl;
         private System.Windows.Forms.Label databaseLbl;
-        private System.Windows.Forms.ToolStripMenuItem helpFeedbackMenuItem;
         private System.Windows.Forms.ListBox templateListBox;
         private UI.CodeGeneration codeGeneration;
         private System.Windows.Forms.ToolTip toolTip;

@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿// ReSharper disable once CheckNamespace
 namespace CodeBuilder.TemplateEngine
 {
-    using Util;
-    using Configuration;
-    using PhysicalDataModel;
-
     public class TemplateData
     {
         private string _name;
@@ -35,125 +27,125 @@ namespace CodeBuilder.TemplateEngine
             string tablePrefix, string author, string version, string templateName, string prefix, string suffix,
             string encoding, string templateFileName, string codeFileName, bool isOmitTablePrefix, bool isCamelCaseName, object modelObject)
         {
-            this._name = name;
-            this._language = language;
-            this._database = database;
-            this._templateEngine = templateEngine;
-            this._package = package;
-            this._tablePrefix = tablePrefix;
-            this._author = author;
-            this._version = version;
-            this._templateName = templateName;
-            this._prefix = prefix;
-            this._suffix = suffix;
-            this._encoding = encoding;
-            this._templateFileName = templateFileName;
-            this._codeFileName = codeFileName;
-            this._isOmitTablePrefix = isOmitTablePrefix;
-            this._isCamelCaseName = isCamelCaseName;
-            this._modelObject = modelObject;
+            _name = name;
+            _language = language;
+            _database = database;
+            _templateEngine = templateEngine;
+            _package = package;
+            _tablePrefix = tablePrefix;
+            _author = author;
+            _version = version;
+            _templateName = templateName;
+            _prefix = prefix;
+            _suffix = suffix;
+            _encoding = encoding;
+            _templateFileName = templateFileName;
+            _codeFileName = codeFileName;
+            _isOmitTablePrefix = isOmitTablePrefix;
+            _isCamelCaseName = isCamelCaseName;
+            _modelObject = modelObject;
         }
 
         public string Name
         {
-            get { return this._name; }
-            set { this._name = value; }
+            get { return _name; }
+            set { _name = value; }
         }
 
         public string Language
         {
-            get { return this._language; }
-            set { this._language = value; }
+            get { return _language; }
+            set { _language = value; }
         }
 
         public string Database
         {
-            get { return this._database; }
-            set { this._database = value; }
+            get { return _database; }
+            set { _database = value; }
         }
 
         public string Package
         {
-            get { return this._package ?? string.Empty; }
-            set { this._package = value; }
+            get { return _package ?? string.Empty; }
+            set { _package = value; }
         }
 
         public string TablePrefix
         {
-            get { return this._tablePrefix ?? string.Empty; }
-            set { this._tablePrefix = value; }
+            get { return _tablePrefix ?? string.Empty; }
+            set { _tablePrefix = value; }
         }
 
         public string Author
         {
-            get { return this._author ?? string.Empty; }
-            set { this._author = value; }
+            get { return _author ?? string.Empty; }
+            set { _author = value; }
         }
 
         public string Version
         {
-            get { return this._version ?? string.Empty; }
-            set { this._version = value; }
+            get { return _version ?? string.Empty; }
+            set { _version = value; }
         }
 
         public string TemplateEngine
         {
-            get { return this._templateEngine; }
-            set { this._templateEngine = value; }
+            get { return _templateEngine; }
+            set { _templateEngine = value; }
         }
 
         public string TemplateName
         {
-            get { return this._templateName; }
-            set { this._templateName = value; }
+            get { return _templateName; }
+            set { _templateName = value; }
         }
 
         public string Prefix
         {
-            get { return this._prefix ?? string.Empty; }
-            set { this._prefix = value; }
+            get { return _prefix ?? string.Empty; }
+            set { _prefix = value; }
         }
 
         public string Suffix
         {
-            get { return this._suffix ?? string.Empty; }
-            set { this._suffix = value; }
+            get { return _suffix ?? string.Empty; }
+            set { _suffix = value; }
         }
 
         public string Encoding
         {
-            get { return this._encoding ?? "UTF-8"; }
-            set { this._encoding = value; }
+            get { return _encoding ?? "UTF-8"; }
+            set { _encoding = value; }
         }
 
         public string TemplateFileName
         {
-            get { return this._templateFileName; }
-            set { this._templateFileName = value; }
+            get { return _templateFileName; }
+            set { _templateFileName = value; }
         }
 
         public string CodeFileName
         {
-            get { return this._codeFileName; }
-            set { this._codeFileName = value; }
+            get { return _codeFileName; }
+            set { _codeFileName = value; }
         }
 
         public bool IsOmitTablePrefix
         {
-            get { return this._isOmitTablePrefix; }
-            set { this._isOmitTablePrefix = value; }
+            get { return _isOmitTablePrefix; }
+            set { _isOmitTablePrefix = value; }
         }
 
         public bool IsCamelCaseName
         {
-            get { return this._isCamelCaseName; }
-            set { this._isCamelCaseName = value; }
+            get { return _isCamelCaseName; }
+            set { _isCamelCaseName = value; }
         }
 
         public object ModelObject
         {
-            get { return this._modelObject; }
-            set { this._modelObject = value; }
+            get { return _modelObject; }
+            set { _modelObject = value; }
         }
     }
 }

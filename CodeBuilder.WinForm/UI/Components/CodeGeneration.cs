@@ -3,31 +3,53 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Threading;
 using CodeBuilder.Framework.Configuration;
+using CodeBuilder.PhysicalDataModel;
+using CodeBuilder.TemplateEngine;
+using CodeBuilder.Util;
+using CodeBuilder.WinForm.Properties;
 
+// ReSharper disable once CheckNamespace
 namespace CodeBuilder.WinForm.UI
 {
-    using Configuration;
-    using PhysicalDataModel;
-    using Properties;
-    using TemplateEngine;
-    using Util;
-
-    public partial class CodeGeneration : Component
+    public sealed partial class CodeGeneration : Component
     {
-        private static Logger logger = InternalTrace.GetLogger(typeof(CodeGeneration));
+        /// <summary>
+        /// Write logger
+        /// </summary>
+        private static readonly Logger Logger = InternalTrace.GetLogger(typeof(CodeGeneration));
 
+        /// <summary>
+        /// Do auto code delegate.
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <param name="asyncOp"></param>
         private delegate void WorkerEventHandler(GenerationParameter parameter, AsyncOperation asyncOp);
-        private SendOrPostCallback onProgressReportDelegate;
-        private SendOrPostCallback onCompletedDelegate;
 
-        private HybridDictionary userStateToLifetime = new HybridDictionary();
+        /// <summary>
+        /// Update progress delegate
+        /// </summary>
+        private SendOrPostCallback _onProgressReportDelegate;
 
+        /// <summary>
+        /// Completed delegate.
+        /// </summary>
+        private SendOrPostCallback _onCompletedDelegate;
+
+        private readonly HybridDictionary _userStateToLifetime = new HybridDictionary();
+
+        /// <summary>
+        /// Construct function
+        /// </summary>
         public CodeGeneration()
         {
             InitializeComponent();
             InitializeDelegates();
         }
 
+        /// <summary>
+        /// Construct function
+        /// </summary>
+        /// <param name="container"></param>
         public CodeGeneration(IContainer container)
         {
             container.Add(this);
@@ -36,49 +58,55 @@ namespace CodeBuilder.WinForm.UI
             InitializeDelegates();
         }
 
-        protected virtual void InitializeDelegates()
+        private void InitializeDelegates()
         {
-            onProgressReportDelegate = new SendOrPostCallback(ReportProgress);
-            onCompletedDelegate = new SendOrPostCallback(GenerateCompleted);
+            _onProgressReportDelegate = ReportProgress;
+            _onCompletedDelegate = GenerateCompleted;
         }
 
-        #region Public events
-
+        /// <summary>
+        /// progress change event
+        /// </summary>
         public event GenerationProgressChangedEventHandler ProgressChanged;
 
+        /// <summary>
+        /// Completed event
+        /// </summary>
         public event GenerationCompletedEventHandler Completed;
 
-        #endregion
-
-        #region Async Generate Code
-
-        public virtual void GenerateAsync(GenerationParameter parameter, object taskId)
+        public void GenerateAsync(GenerationParameter parameter, object taskId)
         {
             AsyncOperation asyncOp = AsyncOperationManager.CreateOperation(taskId);
-            lock (userStateToLifetime.SyncRoot)
+            lock (_userStateToLifetime.SyncRoot)
             {
-                if (userStateToLifetime.Contains(taskId)) 
-                    throw new ArgumentException(Resources.TaskId, "taskId");
+                if (_userStateToLifetime.Contains(taskId))
+                    throw new ArgumentException(Resources.TaskId, nameof(taskId));
 
-                userStateToLifetime[taskId] = asyncOp;
+                _userStateToLifetime[taskId] = asyncOp;
             }
 
-            WorkerEventHandler workerDelegate = new WorkerEventHandler(GenerateWorker);
+            WorkerEventHandler workerDelegate = GenerateWorker;
             workerDelegate.BeginInvoke(parameter, asyncOp, null, null);
         }
 
         public void CancelAsync(object taskId)
         {
-            AsyncOperation asyncOp = userStateToLifetime[taskId] as AsyncOperation;
+            // ReSharper disable once InconsistentlySynchronizedField
+            AsyncOperation asyncOp = _userStateToLifetime?[taskId] as AsyncOperation;
             if (asyncOp != null)
             {
-                lock (userStateToLifetime.SyncRoot)
+                lock (_userStateToLifetime.SyncRoot)
                 {
-                    userStateToLifetime.Remove(taskId);
+                    _userStateToLifetime.Remove(taskId);
                 }
             }
         }
 
+        /// <summary>
+        /// Async operation work
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <param name="asyncOp"></param>
         private void GenerateWorker(GenerationParameter parameter, AsyncOperation asyncOp)
         {
             if (IsTaskCanceled(asyncOp.UserSuppliedState)) return;
@@ -90,21 +118,36 @@ namespace CodeBuilder.WinForm.UI
             try
             {
                 string adapterTypeName = ConfigManager.SettingsSection.TemplateEngines[parameter.Settings.TemplateEngine].Adapter;
-                ITemplateEngine templateEngine = (ITemplateEngine)Activator.CreateInstance(Type.GetType(adapterTypeName));
-
-                foreach (string templateName in parameter.Settings.TemplatesNames)
+                if (adapterTypeName != null)
                 {
-                    this.GenerateCode(parameter, templateEngine, templateName, ref genratedCount, ref errorCount, ref progressCount, asyncOp);
+                    var type = Type.GetType(adapterTypeName);
+                    if (type == null) return;
+                    ITemplateEngine templateEngine = (ITemplateEngine)Activator.CreateInstance(type);
+
+                    foreach (string templateName in parameter.Settings.TemplatesNames)
+                    {
+                        GenerateCode(parameter, templateEngine, templateName, ref genratedCount, ref errorCount, ref progressCount, asyncOp);
+                    }
                 }
             }
             catch (Exception ex)
             {
-                logger.Error("", ex);
+                Logger.Error("", ex);
             }
 
-            this.CompletionMethod(null, IsTaskCanceled(asyncOp.UserSuppliedState), asyncOp);
+            CompletionMethod(null, IsTaskCanceled(asyncOp.UserSuppliedState), asyncOp);
         }
 
+        /// <summary>
+        /// Realy to auto code
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <param name="templateEngine"></param>
+        /// <param name="templateName"></param>
+        /// <param name="genratedCount"></param>
+        /// <param name="errorCount"></param>
+        /// <param name="progressCount"></param>
+        /// <param name="asyncOp"></param>
         private void GenerateCode(GenerationParameter parameter, ITemplateEngine templateEngine, string templateName,
             ref int genratedCount, ref int errorCount, ref int progressCount, AsyncOperation asyncOp)
         {
@@ -127,7 +170,7 @@ namespace CodeBuilder.WinForm.UI
 
                     var args = new GenerationProgressChangedEventArgs(genratedCount,
                             errorCount, currentCodeFileName, ++progressCount, asyncOp.UserSuppliedState);
-                    asyncOp.Post(this.onProgressReportDelegate, args);
+                    asyncOp.Post(this._onProgressReportDelegate, args);
                 }
             }
         }
@@ -138,29 +181,47 @@ namespace CodeBuilder.WinForm.UI
             OnCompleted(e);
         }
 
+        /// <summary>
+        /// ReportProgress
+        /// </summary>
+        /// <param name="state"></param>
         private void ReportProgress(object state)
         {
             GenerationProgressChangedEventArgs e = state as GenerationProgressChangedEventArgs;
             OnProgressChanged(e);
         }
 
-        protected void OnCompleted(GenerationCompletedEventArgs e)
+        /// <summary>
+        /// Completed auto code.
+        /// </summary>
+        /// <param name="e"></param>
+        private void OnCompleted(GenerationCompletedEventArgs e)
         {
-            if (Completed != null) Completed(this, e);
+            Completed?.Invoke(this, e);
         }
 
-        protected void OnProgressChanged(GenerationProgressChangedEventArgs e)
+        /// <summary>
+        /// change progress.
+        /// </summary>
+        /// <param name="e"></param>
+        private void OnProgressChanged(GenerationProgressChangedEventArgs e)
         {
-            if (ProgressChanged != null) ProgressChanged(e);
+            ProgressChanged?.Invoke(e);
         }
 
-        private void CompletionMethod(Exception exception,bool canceled,AsyncOperation asyncOp)
+        /// <summary>
+        /// Completion method.
+        /// </summary>
+        /// <param name="exception"></param>
+        /// <param name="canceled"></param>
+        /// <param name="asyncOp"></param>
+        private void CompletionMethod(Exception exception, bool canceled, AsyncOperation asyncOp)
         {
             if (!canceled)
             {
-                lock (userStateToLifetime.SyncRoot)
+                lock (_userStateToLifetime.SyncRoot)
                 {
-                    userStateToLifetime.Remove(asyncOp.UserSuppliedState);
+                    _userStateToLifetime.Remove(asyncOp.UserSuppliedState);
                 }
             }
 
@@ -169,13 +230,20 @@ namespace CodeBuilder.WinForm.UI
                 canceled,
                 asyncOp.UserSuppliedState);
 
-            asyncOp.PostOperationCompleted(onCompletedDelegate, e);
+            asyncOp.PostOperationCompleted(_onCompletedDelegate, e);
         }
 
+        /// <summary>
+        /// is canceled task.
+        /// </summary>
+        /// <param name="taskId"></param>
+        /// <returns></returns>
         private bool IsTaskCanceled(object taskId)
         {
-            return (userStateToLifetime[taskId] == null);
+            lock (_userStateToLifetime.SyncRoot)
+            {
+                return (_userStateToLifetime[taskId] == null);
+            }
         }
-        #endregion
     }
 }

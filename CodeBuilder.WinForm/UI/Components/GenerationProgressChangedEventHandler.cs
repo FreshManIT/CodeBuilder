@@ -1,37 +1,25 @@
 ﻿using System.ComponentModel;
 
+// ReSharper disable once CheckNamespace
 namespace CodeBuilder.WinForm.UI
 {
     public delegate void GenerationProgressChangedEventHandler(GenerationProgressChangedEventArgs args);
 
     public class GenerationProgressChangedEventArgs : ProgressChangedEventArgs
     {
-        private int _generatedCount;
-        private int _errorCount;
-        private string _currentFileName;
-
         public GenerationProgressChangedEventArgs(int generatedCount, int errorCount, string currentFileName,
             int progressPercentage, object userToken)
             : base(progressPercentage, userToken)
         {
-            this._generatedCount = generatedCount;
-            this._errorCount = errorCount;
-            this._currentFileName = currentFileName;
+            GeneratedCount = generatedCount;
+            ErrorCount = errorCount;
+            CurrentFileName = currentFileName;
         }
 
-        public int GeneratedCount
-        {
-            get { return this._generatedCount; }
-        }
+        public int GeneratedCount { get; }
 
-        public int ErrorCount
-        {
-            get { return this._errorCount; }
-        }
+        public int ErrorCount { get; }
 
-        public string CurrentFileName
-        {
-            get { return this._currentFileName; }
-        }
+        public string CurrentFileName { get; }
     }
 }

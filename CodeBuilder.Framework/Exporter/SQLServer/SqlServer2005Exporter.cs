@@ -1,42 +1,40 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Data;
 using System.Data.SqlClient;
+using System.Text;
+using CodeBuilder.PhysicalDataModel;
 
+// ReSharper disable once CheckNamespace
 namespace CodeBuilder.DataSource.Exporter
 {
-    using PhysicalDataModel;
-
-    public class SqlServer2005Exporter : BaseExporter, IExporter
+    public class SqlServer2005Exporter : BaseExporter
     {
         #region IExporter Members
 
         public override Model Export(string connectionString)
         {
             if (connectionString == null)
-                throw new ArgumentNullException("connectionString");
+                throw new ArgumentNullException(nameof(connectionString));
 
-            Model model = new Model();
-            model.Database = "SqlServer2005";
+            Model model = new Model
+            {
+                Database = "SqlServer2005",
+                Tables = GetTables(connectionString),
+                Views = GetViews(connectionString)
+            };
 
-            try
-            {
-                model.Tables = this.GetTables(connectionString);
-                model.Views = this.GetViews(connectionString);
-                return model;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            return model;
         }
 
         #endregion
 
         #region Private Members
 
+        /// <summary>
+        /// Get tables.
+        /// </summary>
+        /// <param name="connectionString"></param>
+        /// <returns></returns>
         private Tables GetTables(string connectionString)
         {
             Tables tables = new Tables(10);
@@ -51,10 +49,12 @@ namespace CodeBuilder.DataSource.Exporter
                 string comment = string.Empty;
                 int objectId = dr.GetInt32(1);
 
-                Table table = new Table(id, displayName, name, comment);
-                table.OriginalName = name;
-                table.Columns = this.GetColumns(objectId, connectionString);
-                table.PrimaryKeys = this.GetPrimaryKeys(objectId, connectionString, table.Columns);
+                Table table = new Table(id, displayName, name, comment)
+                {
+                    OriginalName = name,
+                    Columns = GetColumns(objectId, connectionString)
+                };
+                table.PrimaryKeys = GetPrimaryKeys(objectId, connectionString, table.Columns);
                 tables.Add(id, table);
             }
             dr.Close();
@@ -62,6 +62,11 @@ namespace CodeBuilder.DataSource.Exporter
             return tables;
         }
 
+        /// <summary>
+        /// Get views.
+        /// </summary>
+        /// <param name="connectionString"></param>
+        /// <returns></returns>
         private Views GetViews(string connectionString)
         {
             Views views = new Views(10);
@@ -76,9 +81,11 @@ namespace CodeBuilder.DataSource.Exporter
                 string comment = string.Empty;
                 int objectId = dr.GetInt32(1);
 
-                View view = new View(id, displayName, name, comment);
-                view.OriginalName = name;
-                view.Columns = this.GetColumns(objectId, connectionString);
+                View view = new View(id, displayName, name, comment)
+                {
+                    OriginalName = name,
+                    Columns = GetColumns(objectId, connectionString)
+                };
                 views.Add(id, view);
             }
             dr.Close();
@@ -86,6 +93,12 @@ namespace CodeBuilder.DataSource.Exporter
             return views;
         }
 
+        /// <summary>
+        /// Get columns.
+        /// </summary>
+        /// <param name="objectId"></param>
+        /// <param name="connectionString"></param>
+        /// <returns></returns>
         private Columns GetColumns(int objectId, string connectionString)
         {
             StringBuilder sqlBuilder = new StringBuilder();
@@ -97,14 +110,16 @@ namespace CodeBuilder.DataSource.Exporter
             sqlBuilder.Append("left join sys.default_constraints as d on d.parent_object_id = c.object_id and d.parent_column_id = c.column_id ");
             sqlBuilder.AppendFormat("where c.object_id={0}", objectId);
 
-            return this.GetColumns(connectionString, sqlBuilder.ToString());
+            return GetColumns(connectionString, sqlBuilder.ToString());
         }
 
-        private Columns GetKeys(int objectId, string connectionString)
-        {
-            return null;
-        }
-
+        /// <summary>
+        /// get primary keys.
+        /// </summary>
+        /// <param name="objectId"></param>
+        /// <param name="connectionString"></param>
+        /// <param name="columns"></param>
+        /// <returns></returns>
         private Columns GetPrimaryKeys(int objectId, string connectionString, Columns columns)
         {
             StringBuilder sqlBuilder = new StringBuilder();
@@ -126,7 +141,12 @@ namespace CodeBuilder.DataSource.Exporter
             return primaryKeys;
         }
 
-
+        /// <summary>
+        /// Get columns.
+        /// </summary>
+        /// <param name="connectionString"></param>
+        /// <param name="sqlCmd"></param>
+        /// <returns></returns>
         private Columns GetColumns(string connectionString, string sqlCmd)
         {
             Columns columns = new Columns(50);
@@ -137,9 +157,9 @@ namespace CodeBuilder.DataSource.Exporter
                 string displayName = dr.IsDBNull(2) ? string.Empty : dr.GetString(2);
                 string name = dr.IsDBNull(2) ? string.Empty : dr.GetString(2);
                 int length = dr.IsDBNull(3) ? 0 : dr.GetInt16(3);
-                bool identity = dr.IsDBNull(4) ? false : dr.GetBoolean(4);
-                bool isNullable = dr.IsDBNull(5) ? false : dr.GetBoolean(5);
-                bool isComputed = dr.IsDBNull(6) ? false : dr.GetBoolean(6);
+                bool identity = !dr.IsDBNull(4) && dr.GetBoolean(4);
+                bool isNullable = !dr.IsDBNull(5) && dr.GetBoolean(5);
+                bool isComputed = !dr.IsDBNull(6) && dr.GetBoolean(6);
                 string dataType = dr.IsDBNull(7) ? string.Empty : dr.GetString(7);
                 string comment = dr.IsDBNull(8) ? string.Empty : dr.GetString(8);
                 string defaultValue = dr.IsDBNull(9) ? string.Empty : dr.GetString(9);

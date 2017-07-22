@@ -21,7 +21,7 @@ namespace CodeBuilder.WinForm.UI.OptionsPages
 
         public override void LoadSettings()
         {
-            isLoaded = true;
+            IsLoaded = true;
             recentFilesCountTextBox.Text = ConfigManager.OptionSection.Options["Environment.RecentFiles.MaxFiles"].Value;
             string value = ConfigManager.OptionSection.Options["Environment.RecentFiles.IsCheckFileExist"].Value;
             checkFilesExistCheckBox.Checked = ConvertHelper.GetBoolean(value);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
+// ReSharper disable once CheckNamespace
 namespace CodeBuilder.WinForm.UI
 {
     using PhysicalDataModel;
@@ -8,31 +9,17 @@ namespace CodeBuilder.WinForm.UI
 
     public class GenerationParameter
     {
-        private Dictionary<string, Model> _models;
-        private Dictionary<string, List<String>> _generationObjects;
-        private GenerationSettings _settings;
-
-        public GenerationParameter(Dictionary<string, Model> models,
-            Dictionary<string, List<String>> generationObjects,GenerationSettings settings)
+        public GenerationParameter(Dictionary<string, Model> models, Dictionary<string, List<String>> generationObjects, GenerationSettings settings)
         {
-            this._models = models;
-            this._generationObjects = generationObjects;
-            this._settings = settings;
+            Models = models;
+            GenerationObjects = generationObjects;
+            Settings = settings;
         }
 
-        public Dictionary<string, Model> Models
-        {
-            get { return this._models; }
-        }
+        public Dictionary<string, Model> Models { get; }
 
-        public Dictionary<string, List<String>> GenerationObjects
-        {
-            get { return this._generationObjects; }
-        }
+        public Dictionary<string, List<String>> GenerationObjects { get; }
 
-        public GenerationSettings Settings
-        {
-            get { return this._settings; }
-        }
+        public GenerationSettings Settings { get; }
     }
 }

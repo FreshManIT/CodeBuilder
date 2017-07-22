@@ -22,7 +22,7 @@ namespace CodeBuilder.WinForm.UI.OptionsPages
 
         public override void LoadSettings()
         {
-            isLoaded = true;
+            IsLoaded = true;
             ouputPathTxtbox.Text = ConfigManager.GenerationCodeOuputPath;
             templatePathTxtbox.Text = ConfigManager.TemplatePath;
         }

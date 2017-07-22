@@ -1,23 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 using CodeBuilder.Framework.Configuration;
 
+// ReSharper disable once CheckNamespace
 namespace CodeBuilder.WinForm.UI.OptionsPages
 {
     using Properties;
     using Util;
-    using Configuration;
 
     public partial class TraceOptionsPage : BaseOptionsPage
     {
-        private static Logger logger = InternalTrace.GetLogger(typeof(TraceOptionsPage));
-
         public TraceOptionsPage()
         {
             InitializeComponent();
@@ -31,7 +22,7 @@ namespace CodeBuilder.WinForm.UI.OptionsPages
 
         public override void LoadSettings()
         {
-            this.isLoaded = true;
+            IsLoaded = true;
             traceLevelCombox.Text = ConfigManager.OptionSection.Options["Options.InternalTraceLevel"].Value;
             logDirectoryLabel.Text = ConfigManager.LogDirectory;
         }

@@ -1,6 +1,7 @@
 ﻿using System.Configuration;
 using CodeBuilder.Framework.Configuration.Settings;
 
+// ReSharper disable once CheckNamespace
 namespace CodeBuilder.Configuration
 {
     public class SettingsSection : ConfigurationSection

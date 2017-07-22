@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using CodeBuilder.Framework.Properties;
 
+// ReSharper disable once CheckNamespace
 namespace CodeBuilder.Exceptions
 {
-    using Framework.Properties;
-
     public class NotSupportDatabaseException : Exception
     {
         public NotSupportDatabaseException()

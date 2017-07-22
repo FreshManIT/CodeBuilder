@@ -7,17 +7,16 @@ namespace CodeBuilder.DataSource.Exporter
 {
     using PhysicalDataModel;
 
-    public class Oracle8iExporter : BaseExporter, IExporter
+    public class Oracle8iExporter : BaseExporter
     {
         #region IExporter Members
 
         public override Model Export(string connectionString)
         {
             if (connectionString == null)
-                throw new ArgumentNullException("connectionString");
+                throw new ArgumentNullException(nameof(connectionString));
 
-            Model model = new Model();
-            model.Database = "Oracle8i";
+            Model model = new Model {Database = "Oracle8i"};
 
             return model;
         }

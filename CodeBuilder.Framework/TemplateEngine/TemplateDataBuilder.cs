@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using CodeBuilder.Framework.Configuration;
 
+// ReSharper disable once CheckNamespace
 namespace CodeBuilder.TemplateEngine
 {
     using Configuration;
@@ -25,7 +26,7 @@ namespace CodeBuilder.TemplateEngine
 
                     foreach (string templateName in settings.TemplatesNames)
                     {
-                        TemplateData templateData = Build(modelObject, settings, templateName, 
+                        TemplateData templateData = Build(modelObject, settings, templateName,
                             models[genObject.Key].Database, genObject.Key);
                         if (templateData != null) templateDatas.Add(templateData);
                     }
@@ -35,8 +36,8 @@ namespace CodeBuilder.TemplateEngine
             return templateDatas;
         }
 
-        public static TemplateData Build<T>(T modelObject, GenerationSettings settings, 
-            string templateName, string database,string modelId)
+        public static TemplateData Build<T>(T modelObject, GenerationSettings settings,
+            string templateName, string database, string modelId)
         {
             if (settings == null) return null;
 
@@ -101,12 +102,18 @@ namespace CodeBuilder.TemplateEngine
 
         private static string GetTemplateDataName(bool isOmitPrefix, bool isCamelCaseName, string tablePrefix, string name)
         {
-            if (isOmitPrefix && (tablePrefix ?? "").Length > 0) name = name.Replace(tablePrefix, "");
+            if (isOmitPrefix && (tablePrefix ?? "").Length > 0)
+            {
+                if (tablePrefix != null)
+                {
+                    name = name.Replace(tablePrefix, "");
+                }
+            }
             if (isCamelCaseName) name = name.CamelCaseName();
             return name;
         }
 
-        private static T GetCamelCaseModelObject<T>(T modelObject,string database,GenerationSettings settings)
+        private static T GetCamelCaseModelObject<T>(T modelObject, string database, GenerationSettings settings)
             where T : BaseTable, IMetaData
         {
             bool isCamelCaseName = settings.IsCamelCaseName;

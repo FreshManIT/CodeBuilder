@@ -3,10 +3,16 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
 
+// ReSharper disable once CheckNamespace
 namespace CodeBuilder.WinForm.UI
 {
-    public class GenerationHelper
+    public static class GenerationHelper
     {
+        /// <summary>
+        /// Check paakge name is valid.
+        /// </summary>
+        /// <param name="packageName"></param>
+        /// <returns></returns>
         public static bool IsValidPackageName(string packageName)
         {
             if (string.IsNullOrEmpty(packageName) ||
@@ -15,6 +21,11 @@ namespace CodeBuilder.WinForm.UI
             return Regex.IsMatch(packageName, "[a-zA-Z]+");
         }
 
+        /// <summary>
+        /// Get node checked dictionary.
+        /// </summary>
+        /// <param name="treeView"></param>
+        /// <returns></returns>
         public static Dictionary<string, List<string>> GetGenerationObjects(TreeView treeView)
         {
             Dictionary<string, List<string>> generationObjects = new Dictionary<string, List<string>>();
@@ -26,7 +37,12 @@ namespace CodeBuilder.WinForm.UI
             return generationObjects;
         }
 
-        public static List<String> GetCheckedTags(TreeNodeCollection nodes)
+        /// <summary>
+        /// Get checked table
+        /// </summary>
+        /// <param name="nodes"></param>
+        /// <returns></returns>
+        private static List<String> GetCheckedTags(TreeNodeCollection nodes)
         {
             List<string> tags = new List<string>();
             foreach (TreeNode node in nodes)
@@ -40,6 +56,11 @@ namespace CodeBuilder.WinForm.UI
             return tags;
         }
 
+        /// <summary>
+        /// Get checked table
+        /// </summary>
+        /// <param name="nodes"></param>
+        /// <param name="tags"></param>
         private static void GetCheckedTags(TreeNodeCollection nodes, List<String> tags)
         {
             foreach (TreeNode node in nodes)

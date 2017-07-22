@@ -1,20 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
+using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
+using CodeBuilder.Configuration;
 using CodeBuilder.Framework.Configuration;
+using CodeBuilder.Util;
+using CodeBuilder.WinForm.Properties;
 
+// ReSharper disable once CheckNamespace
 namespace CodeBuilder.WinForm.UI.OptionsPages
 {
-    using Properties;
-    using Configuration;
-    using Util;
-
     public partial class TemplateOptionsPage : BaseOptionsPage
     {
         private static Logger logger = InternalTrace.GetLogger(typeof(TemplateOptionsPage));
@@ -33,17 +29,17 @@ namespace CodeBuilder.WinForm.UI.OptionsPages
 
         public override void LoadSettings()
         {
-            this.isLoaded = true;
-            this.SetComboBoxItems();
-            this.ListTemplateItems();
+            IsLoaded = true;
+            SetComboBoxItems();
+            ListTemplateItems();
         }
 
         public override void ApplySettings()
         {
             try
             {
-                this.SaveChanged();
-                this.listBoxItems.Clear();
+                SaveChanged();
+                listBoxItems.Clear();
                 ConfigManager.RefreshTemplates();
                 ConfigManager.Save();
             }
@@ -57,25 +53,25 @@ namespace CodeBuilder.WinForm.UI.OptionsPages
 
         private void templateListbox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (this.templateListbox.SelectedItem == null) return;
-            this.SelectedListBoxItem(this.templateListbox.SelectedItem.ToString());
+            if (templateListbox.SelectedItem == null) return;
+            SelectedListBoxItem(templateListbox.SelectedItem.ToString());
         }
 
         private void openFileDialogBtn_Click(object sender, EventArgs e)
         {
-            if (this.openFileDialog.ShowDialog() == DialogResult.OK)
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                this.fileNameTextbox.Text = this.openFileDialog.FileName;
+                fileNameTextbox.Text = openFileDialog.FileName;
             }
         }
 
         private void editBtn_Click(object sender, EventArgs e)
         {
-            if (this.fileNameTextbox.Text.Trim().Length == 0) return;
+            if (fileNameTextbox.Text.Trim().Length == 0) return;
 
             try
             {
-                System.Diagnostics.Process.Start("Notepad.exe", this.fileNameTextbox.Text);
+                Process.Start("Notepad.exe", fileNameTextbox.Text);
             }
             catch (Exception ex)
             {
@@ -87,15 +83,15 @@ namespace CodeBuilder.WinForm.UI.OptionsPages
         private void removeBtn_Click(object sender, EventArgs e)
         {
 
-            object selectedItem = this.templateListbox.SelectedItem;
+            object selectedItem = templateListbox.SelectedItem;
             if (selectedItem == null) return;
 
             string name = selectedItem.ToString().Trim().ToLower();
-            this.listBoxItems[name].Status = TemplateItemStatus.Deleted;
+            listBoxItems[name].Status = TemplateItemStatus.Deleted;
 
             try
             {
-                this.templateListbox.Items.RemoveAt(this.templateListbox.SelectedIndex);
+                templateListbox.Items.RemoveAt(templateListbox.SelectedIndex);
             }
             catch (Exception ex)
             {
@@ -106,12 +102,12 @@ namespace CodeBuilder.WinForm.UI.OptionsPages
 
         private void newsaveBtn_Click(object sender, EventArgs e)
         {
-            string language = this.languageCombox.Text.Trim();
-            string engine = this.engineCombox.Text.Trim();
-            string fileName = this.fileNameTextbox.Text.Trim();
-            string displayName = this.displayNameTxtbox.Text.Trim();
-            string prefix = this.prefixTxtBox.Text.Trim();
-            string suffix = this.suffixTxtBox.Text.Trim();
+            string language = languageCombox.Text.Trim();
+            string engine = engineCombox.Text.Trim();
+            string fileName = fileNameTextbox.Text.Trim();
+            string displayName = displayNameTxtbox.Text.Trim();
+            string prefix = prefixTxtBox.Text.Trim();
+            string suffix = suffixTxtBox.Text.Trim();
 
             if (displayName.Length == 0 || fileName.Length == 0)
             {
@@ -125,25 +121,25 @@ namespace CodeBuilder.WinForm.UI.OptionsPages
 
             try
             {
-                string name = this.GetTemplateUniqueName(language, engine, displayName);
-                if (this.listBoxItems.ContainsKey(name))
+                string name = GetTemplateUniqueName(language, engine, displayName);
+                if (listBoxItems.ContainsKey(name))
                 {
-                    this.listBoxItems[name].Name = name;
-                    this.listBoxItems[name].Language = language;
-                    this.listBoxItems[name].Engine = engine;
-                    this.listBoxItems[name].FileName = fileName;
-                    this.listBoxItems[name].DisplayName = displayName;
-                    this.listBoxItems[name].Prefix = prefix;
-                    this.listBoxItems[name].Suffix = suffix;
-                    if (this.listBoxItems[name].Status != TemplateItemStatus.New)
-                        this.listBoxItems[name].Status = TemplateItemStatus.Edit;
+                    listBoxItems[name].Name = name;
+                    listBoxItems[name].Language = language;
+                    listBoxItems[name].Engine = engine;
+                    listBoxItems[name].FileName = fileName;
+                    listBoxItems[name].DisplayName = displayName;
+                    listBoxItems[name].Prefix = prefix;
+                    listBoxItems[name].Suffix = suffix;
+                    if (listBoxItems[name].Status != TemplateItemStatus.New)
+                        listBoxItems[name].Status = TemplateItemStatus.Edit;
 
                     return;
                 }
 
-                this.listBoxItems.Add(name, new TemplateItem(name, language,
+                listBoxItems.Add(name, new TemplateItem(name, language,
                     engine, fileName, displayName, prefix, suffix, TemplateItemStatus.New));
-                this.templateListbox.Items.Add(name);
+                templateListbox.Items.Add(name);
             }
             catch (Exception ex)
             {
@@ -163,27 +159,27 @@ namespace CodeBuilder.WinForm.UI.OptionsPages
 
         private void SetComboBoxItems()
         {
-            this.languageCombox.Items.Clear();
-            this.engineCombox.Items.Clear();
+            languageCombox.Items.Clear();
+            engineCombox.Items.Clear();
 
             foreach (LanguageElement language in ConfigManager.SettingsSection.Languages)
             {
-                this.languageCombox.Items.Add(language.Name);
+                languageCombox.Items.Add(language.Name);
             }
 
             foreach (TemplateEngineElement templateEngine in ConfigManager.SettingsSection.TemplateEngines)
             {
-                this.engineCombox.Items.Add(templateEngine.Name);
+                engineCombox.Items.Add(templateEngine.Name);
             }
 
-            this.languageCombox.Text = this.languageCombox.Items[0].ToString();
-            this.engineCombox.Text = this.engineCombox.Items[0].ToString();
+            languageCombox.Text = languageCombox.Items[0].ToString();
+            engineCombox.Text = engineCombox.Items[0].ToString();
         }
 
         private void ListTemplateItems()
         {
-            this.templateListbox.Items.Clear();
-            this.listBoxItems.Clear();
+            templateListbox.Items.Clear();
+            listBoxItems.Clear();
 
             foreach (TemplateElement template in ConfigManager.TemplateSection.Templates)
             {
@@ -191,7 +187,7 @@ namespace CodeBuilder.WinForm.UI.OptionsPages
                 string fileName = Path.Combine(ConfigManager.TemplatePath, template.FileName);
                 if (!listBoxItems.ContainsKey(name))
                 {
-                    this.templateListbox.Items.Add(name);
+                    templateListbox.Items.Add(name);
                     listBoxItems.Add(name, new TemplateItem(template.Name, template.Language,
                         template.Engine, fileName, template.DisplayName, template.Prefix, template.Suffix));
                 }
@@ -202,20 +198,20 @@ namespace CodeBuilder.WinForm.UI.OptionsPages
         {
             if (selectedItem == null) return;
 
-            string name = selectedItem.ToString();
+            string name = selectedItem;
             if (!listBoxItems.ContainsKey(name)) return;
 
-            this.languageCombox.Text = listBoxItems[name].Language;
-            this.engineCombox.Text = listBoxItems[name].Engine;
-            this.displayNameTxtbox.Text = listBoxItems[name].DisplayName;
-            this.fileNameTextbox.Text = listBoxItems[name].FileName;
-            this.prefixTxtBox.Text = listBoxItems[name].Prefix;
-            this.suffixTxtBox.Text = listBoxItems[name].Suffix;
+            languageCombox.Text = listBoxItems[name].Language;
+            engineCombox.Text = listBoxItems[name].Engine;
+            displayNameTxtbox.Text = listBoxItems[name].DisplayName;
+            fileNameTextbox.Text = listBoxItems[name].FileName;
+            prefixTxtBox.Text = listBoxItems[name].Prefix;
+            suffixTxtBox.Text = listBoxItems[name].Suffix;
         }
 
         private void SaveChanged()
         {
-            foreach (var item in this.listBoxItems)
+            foreach (var item in listBoxItems)
             {
                 if (item.Value.Status == TemplateItemStatus.None) continue;
                 if (item.Value.Status == TemplateItemStatus.Deleted)
@@ -224,19 +220,18 @@ namespace CodeBuilder.WinForm.UI.OptionsPages
                     continue;
                 }
 
-                item.Value.FileName = this.GetTemplateReleatedFileName(item.Value);
+                item.Value.FileName = GetTemplateReleatedFileName(item.Value);
                 if (string.IsNullOrEmpty(item.Value.FileName)) continue;
 
                 if (item.Value.Status == TemplateItemStatus.New)
                 {
-                    this.AddTemplate(item.Value);
+                    AddTemplate(item.Value);
                     continue;
                 }
 
                 if (item.Value.Status == TemplateItemStatus.Edit)
                 {
-                    this.EditTemplate(item.Value);
-                    continue;
+                    EditTemplate(item.Value);
                 }
             }
         }
@@ -272,7 +267,7 @@ namespace CodeBuilder.WinForm.UI.OptionsPages
         private string GetTemplateReleatedFileName(TemplateItem item)
         {
             string languageAlais = ConfigManager.SettingsSection.Languages[item.Language].Alias;
-            string fileName = this.CopyTemplateFile(item.DisplayName.ToLower(), languageAlais, item.Engine, item.FileName);
+            string fileName = CopyTemplateFile(item.DisplayName.ToLower(), languageAlais, item.Engine, item.FileName);
             return fileName.Replace(ConfigManager.TemplatePath, "").TrimStart('\\', '/');
         }
 
@@ -308,7 +303,7 @@ namespace CodeBuilder.WinForm.UI.OptionsPages
         {
             string langext = ConfigManager.SettingsSection.Languages[language].Extension;
             string enginext = ConfigManager.SettingsSection.TemplateEngines[engineName].Extension;
-            return string.Format("{0}{1}{2}", displayName, langext, enginext).ToLower();
+            return $"{displayName}{langext}{enginext}".ToLower();
         }
 
 
@@ -316,16 +311,8 @@ namespace CodeBuilder.WinForm.UI.OptionsPages
 
         private class TemplateItem
         {
-            public TemplateItem() { }
-
-            public TemplateItem(string name,string language, string engine, 
-                string fileName,string displayName,string prefix,string suffix)
-                : this(name, language, engine, fileName, displayName,prefix,suffix,TemplateItemStatus.None)
-            {
-            }
-
             public TemplateItem(string name, string language, string engine,
-                string fileName, string displayName, string prefix, string suffix, TemplateItemStatus status)
+                string fileName, string displayName, string prefix, string suffix, TemplateItemStatus status = TemplateItemStatus.None)
                 : this(name, language, engine, fileName, displayName, prefix, suffix, "", "", status)
             {
             }
@@ -333,16 +320,16 @@ namespace CodeBuilder.WinForm.UI.OptionsPages
             public TemplateItem(string name, string language, string engine,
                 string fileName, string displayName, string prefix, string suffix, string url, string desc, TemplateItemStatus status)
             {
-                this.Name = name;
-                this.Language = language;
-                this.Engine = engine;
-                this.FileName = fileName;
-                this.DisplayName = displayName;
-                this.Prefix = prefix;
-                this.Suffix = suffix;
-                this.Url = url;
-                this.Description = desc;
-                this.Status = status;
+                Name = name;
+                Language = language;
+                Engine = engine;
+                FileName = fileName;
+                DisplayName = displayName;
+                Prefix = prefix;
+                Suffix = suffix;
+                Url = url;
+                Description = desc;
+                Status = status;
             }
 
             public string Name { get; set; }
