@@ -41,8 +41,8 @@
   </templateEngines>
   <appSettings>
     <add key="typeMapper" value="CodeBuilder.TypeMapping.DefaultTypeMapper,CodeBuilder.Framework" />
-    <add key="onlineTemplateUrl" value="https://github.com/xianrendzw/CodeBuilder/tree/master/CodeBuilder.WinForm/Templates"/>
-    <add key="helpUrl" value="https://github.com/xianrendzw/CodeBuilder/blob/master/README.MD"/>
-    <add key="feedbackUrl" value="https://github.com/xianrendzw/CodeBuilder/issues"/>
+    <add key="onlineTemplateUrl" value="https://github.com/FreshManIT/CodeBuilder/tree/master/CodeBuilder.WinForm/Templates"/>
+    <add key="helpUrl" value="https://github.com/FreshManIT/CodeBuilder/blob/master/README.md"/>
+    <add key="feedbackUrl" value="https://github.com/FreshManIT/CodeBuilder/issues"/>
   </appSettings>
 </settingsSection>

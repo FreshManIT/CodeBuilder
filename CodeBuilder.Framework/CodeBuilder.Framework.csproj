@@ -101,6 +101,7 @@
     <Compile Include="PhysicalDataModel\Columns.cs" />
     <Compile Include="PhysicalDataModel\IMetaData.cs" />
     <Compile Include="PhysicalDataModel\Model.cs" />
+    <Compile Include="PhysicalDataModel\ReferenceModel.cs" />
     <Compile Include="PhysicalDataModel\Table.cs" />
     <Compile Include="PhysicalDataModel\Tables.cs" />
     <Compile Include="PhysicalDataModel\View.cs" />

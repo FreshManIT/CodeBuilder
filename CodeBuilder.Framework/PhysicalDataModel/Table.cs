@@ -37,5 +37,15 @@ namespace CodeBuilder.PhysicalDataModel
             get { return this._keys; }
             set { this._keys = value; }
         }
+
+        /// <summary>
+        /// referenced parent list
+        /// </summary>
+        public List<ReferencedModel> ReferencedParent { get; set; }
+
+        /// <summary>
+        /// referenced parent list
+        /// </summary>
+        public List<ReferencedModel> ReferencedChild { get; set; }
     }
 }

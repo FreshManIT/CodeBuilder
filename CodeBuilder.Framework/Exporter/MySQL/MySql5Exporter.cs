@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Text;
 using MySql.Data.MySqlClient;
 
@@ -56,7 +59,9 @@ namespace CodeBuilder.DataSource.Exporter
                 {
                     OriginalName = name,
                     Columns = GetColumns(displayName, originalDbName, connectionString),
-                    PrimaryKeys = GetPrimaryKeys(displayName, originalDbName, connectionString)
+                    PrimaryKeys = GetPrimaryKeys(displayName, originalDbName, connectionString),
+                    ReferencedParent = GetReferencedParentList(connectionString, name),
+                    ReferencedChild = GetReferencedChildList(connectionString, name)
                 };
                 tables.Add(id, table);
             }
@@ -185,6 +190,80 @@ namespace CodeBuilder.DataSource.Exporter
             dr.Close();
 
             return columns;
+        }
+
+        /// <summary>
+        /// get referenced parent list
+        /// </summary>
+        /// <param name="connectionString">connection string</param>
+        /// <param name="tableName">you need table name</param>
+        private List<ReferencedModel> GetReferencedParentList(string connectionString, string tableName)
+        {
+            if (string.IsNullOrEmpty(tableName)) return null;
+            string sqlCmd = $@"
+SELECT
+	CONSTRAINT_NAME ForeignKey,
+	TABLE_NAME TableName,
+	COLUMN_NAME ForeignKeyCell,
+	REFERENCED_TABLE_NAME ReferencedTableName,
+	REFERENCED_COLUMN_NAME ReferencedCell
+FROM
+	INFORMATION_SCHEMA.KEY_COLUMN_USAGE
+WHERE
+	REFERENCED_TABLE_NAME = '{tableName}'";
+            var resulteInfo = new List<ReferencedModel>();
+            MySqlDataReader dr = MySqlHelper.ExecuteReader(connectionString, sqlCmd);
+            while (dr.Read())
+            {
+                var tempModel = new ReferencedModel
+                {
+                    ForeignKey = (string)dr["ForeignKey"],
+                    ForeignKeyCell = (string)dr["ForeignKeyCell"],
+                    ReferencedCell = (string)dr["ReferencedCell"],
+                    ReferencedTableName = (string)dr["ReferencedTableName"],
+                    TableName = (string)dr["TableName"]
+                };
+                resulteInfo.Add(tempModel);
+            }
+            dr.Close();
+            return resulteInfo;
+        }
+
+        /// <summary>
+        /// get referenced parent list
+        /// </summary>
+        /// <param name="connectionString">connection string</param>
+        /// <param name="tableName">you need table name</param>
+        private List<ReferencedModel> GetReferencedChildList(string connectionString, string tableName)
+        {
+            if (string.IsNullOrEmpty(tableName)) return null;
+            string sqlCmd = $@"
+SELECT
+	CONSTRAINT_NAME ForeignKey,
+	TABLE_NAME TableName,
+	COLUMN_NAME ForeignKeyCell,
+	REFERENCED_TABLE_NAME ReferencedTableName,
+	REFERENCED_COLUMN_NAME ReferencedCell
+FROM
+	INFORMATION_SCHEMA.KEY_COLUMN_USAGE
+WHERE
+	TABLE_NAME='{tableName}' and REFERENCED_TABLE_NAME !=''";
+            var resulteInfo = new List<ReferencedModel>();
+            MySqlDataReader dr = MySqlHelper.ExecuteReader(connectionString, sqlCmd);
+            while (dr.Read())
+            {
+                var tempModel = new ReferencedModel
+                {
+                    ForeignKey = (string)dr["ForeignKey"],
+                    ForeignKeyCell = (string)dr["ForeignKeyCell"],
+                    ReferencedCell = (string)dr["ReferencedCell"],
+                    ReferencedTableName = (string)dr["ReferencedTableName"],
+                    TableName = (string)dr["TableName"]
+                };
+                resulteInfo.Add(tempModel);
+            }
+            dr.Close();
+            return resulteInfo;
         }
     }
 }

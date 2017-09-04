@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Text;
@@ -52,7 +53,9 @@ namespace CodeBuilder.DataSource.Exporter
                 Table table = new Table(id, displayName, name, comment)
                 {
                     OriginalName = name,
-                    Columns = GetColumns(objectId, connectionString)
+                    Columns = GetColumns(objectId, connectionString),
+                    ReferencedParent = GetReferencedParentList(connectionString, name),
+                    ReferencedChild = GetReferencedChildList(connectionString, name)
                 };
                 table.PrimaryKeys = GetPrimaryKeys(objectId, connectionString, table.Columns);
                 tables.Add(id, table);
@@ -179,6 +182,95 @@ namespace CodeBuilder.DataSource.Exporter
             return columns;
         }
 
+        /// <summary>
+        /// get referenced parent list
+        /// </summary>
+        /// <param name="connectionString">connection string</param>
+        /// <param name="tableName">you need table name</param>
+        private List<ReferencedModel> GetReferencedParentList(string connectionString, string tableName)
+        {
+            if (string.IsNullOrEmpty(tableName)) return null;
+            string sqlCmd = $@"
+SELECT
+
+    object_name(constraint_object_id) ForeignKey,
+	object_name(parent_object_id) TableName,
+	col_name(
+        parent_object_id,
+        parent_column_id
+    ) ForeignKeyCell,
+	object_name(referenced_object_id) ReferencedTableName,
+	col_name(
+        referenced_object_id,
+        referenced_column_id
+    ) ReferencedCell
+FROM
+
+    sys.foreign_key_columns
+WHERE
+    referenced_object_id = object_id('{tableName}')";
+            var resulteInfo = new List<ReferencedModel>();
+            SqlDataReader dr = SqlHelper.ExecuteReader(connectionString, CommandType.Text, sqlCmd);
+            while (dr.Read())
+            {
+                var tempModel = new ReferencedModel
+                {
+                    ForeignKey = (string)dr["ForeignKey"],
+                    ForeignKeyCell = (string)dr["ForeignKeyCell"],
+                    ReferencedCell = (string)dr["ReferencedCell"],
+                    ReferencedTableName = (string)dr["ReferencedTableName"],
+                    TableName = (string)dr["TableName"]
+                };
+                resulteInfo.Add(tempModel);
+            }
+            dr.Close();
+            return resulteInfo;
+        }
+
+        /// <summary>
+        /// get referenced parent list
+        /// </summary>
+        /// <param name="connectionString">connection string</param>
+        /// <param name="tableName">you need table name</param>
+        private List<ReferencedModel> GetReferencedChildList(string connectionString, string tableName)
+        {
+            if (string.IsNullOrEmpty(tableName)) return null;
+            string sqlCmd = $@"
+SELECT
+
+    object_name(constraint_object_id) ForeignKey,
+	object_name(parent_object_id) TableName,
+	col_name(
+        parent_object_id,
+        parent_column_id
+    ) ForeignKeyCell,
+	object_name(referenced_object_id) ReferencedTableName,
+	col_name(
+        referenced_object_id,
+        referenced_column_id
+    ) ReferencedCell
+FROM
+
+    sys.foreign_key_columns
+WHERE
+    parent_object_id=OBJECT_ID('{tableName}')";
+            var resulteInfo = new List<ReferencedModel>();
+            SqlDataReader dr = SqlHelper.ExecuteReader(connectionString, CommandType.Text, sqlCmd);
+            while (dr.Read())
+            {
+                var tempModel = new ReferencedModel
+                {
+                    ForeignKey = (string)dr["ForeignKey"],
+                    ForeignKeyCell = (string)dr["ForeignKeyCell"],
+                    ReferencedCell = (string)dr["ReferencedCell"],
+                    ReferencedTableName = (string)dr["ReferencedTableName"],
+                    TableName = (string)dr["TableName"]
+                };
+                resulteInfo.Add(tempModel);
+            }
+            dr.Close();
+            return resulteInfo;
+        }
         #endregion
     }
 }
