@@ -11,14 +11,12 @@
   <exporters>
     <exporter name="PowerDesigner12" type="CodeBuilder.DataSource.Exporter.PowerDesigner12Exporter,CodeBuilder.Framework"/>
     <exporter name="MySQL5" type="CodeBuilder.DataSource.Exporter.MySql5Exporter,CodeBuilder.Framework"/>
-    <exporter name="SqlServer2000" type="CodeBuilder.DataSource.Exporter.SqlServer2000Exporter,CodeBuilder.Framework"/>
     <exporter name="SqlServer2005" type="CodeBuilder.DataSource.Exporter.SqlServer2005Exporter,CodeBuilder.Framework"/>
     <exporter name="SqlServer2008" type="CodeBuilder.DataSource.Exporter.SqlServer2008Exporter,CodeBuilder.Framework"/>
-    <exporter name="Oracle8i" type="CodeBuilder.DataSource.Exporter.Oracle8iExporter,CodeBuilder.Framework"/>
+    <exporter name="Oracle11g" type="CodeBuilder.DataSource.Exporter.Oracle11gExporter,CodeBuilder.Framework"/>
   </exporters>
   <databases>
     <database name="MySQL5" typeMapping="mysql5"/>
-    <database name="SqlServer2000" typeMapping="sqlserver2000" />
     <database name="SqlServer2005" typeMapping="sqlserver2005"/>
     <database name="SqlServer2008" typeMapping="sqlserver2008"/>
     <database name="Oracle8i" typeMapping="oracle" />

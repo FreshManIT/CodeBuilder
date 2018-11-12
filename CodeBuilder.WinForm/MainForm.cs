@@ -371,7 +371,7 @@ namespace CodeBuilder.WinForm
         {
             if (e.Node.Parent == null && e.Node != null)
             {
-                databaseNameLbl.Text = e.Node.Tag.ToString();
+                databaseNameLbl.Text = e.Node.Tag?.ToString();
                 statusBarDatabase.Text = databaseNameLbl.Text;
             }
         }

@@ -20,7 +20,7 @@ namespace $!{tdo.Package}
     {
         #foreach($column in $tdo.ModelObject.Columns.Values)
         /// <summary>
-        /// $column.Id
+        /// $column.Id $column.Comment
         /// </summary>
         public $column.LanguageType ${column.Name} { get; set; }
         #end

@@ -25,6 +25,8 @@ namespace CodeBuilder.PhysicalDataModel
         protected bool _hasDefault;
         protected bool _isComputed;
 
+        protected string _tablename;
+
         public Column()
         {
         }
@@ -151,5 +153,7 @@ namespace CodeBuilder.PhysicalDataModel
         {
             get { return "column"; }
         }
+
+        public string TableName { get { return this._tablename; } set { _tablename = value; } }
     }
 }
